@@ -2,8 +2,6 @@
 
 ## BACKLOG
 
-- Share to Twitter/X
-- Random Quote Button
 - Generate Shareable Quote Images
 - Category Pages (success, love, life)
 - Public API for Developers
@@ -15,3 +13,5 @@
 ## COMPLETED
 
 - Dark Mode Toggle ✓ (includes light/dark switch + localStorage persistence)
+- Share to Twitter/X ✓ (share quotes directly to X/Twitter with one click)
+- Random Quote Button ✓ (one-click random quote refresh)

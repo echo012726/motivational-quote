@@ -502,8 +502,24 @@
         .share-btn.whatsapp:hover { border-color: #25D366; }
         .share-btn.linkedin:hover { border-color: #0A66C2; }
         .share-btn.reddit:hover { border-color: #FF4500; }
+        .share-btn.image { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .share-btn.image:hover { border-color: #667eea; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
 
-        /* Ad Space - Bottom */
+        /* Image Modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-modal.active { display: flex; }
+        .image-modal img { max-width: 90%; max-height: 90%; border-radius: 12px; }
         .ad-space-bottom {
             width: 100%;
             min-height: 250px;
@@ -611,6 +627,9 @@
                 </button>
                 <button class="share-btn reddit" onclick="shareReddit()" title="Share on Reddit">
                     👽 Reddit
+                </button>
+                <button class="share-btn image" onclick="generateQuoteImage()" title="Generate Quote Image">
+                    🖼️ Create Image
                 </button>
             </div>
 
@@ -1047,6 +1066,98 @@
             const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}`);
             const url = encodeURIComponent('https://motivational-quote.org');
             window.open(`https://reddit.com/submit?url=${url}&title=${text}`, '_blank');
+        }
+
+        // Generate Shareable Quote Image
+        function generateQuoteImage() {
+            if (!currentQuote) return;
+            
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1200;
+            canvas.height = 630;
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#1a1a2e');
+            gradient.addColorStop(1, '#16213e');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Add decorative elements
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.1)';
+            ctx.beginPath();
+            ctx.arc(100, 100, 200, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(1100, 530, 150, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Quote text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 48px Georgia, serif';
+            ctx.textAlign = 'center';
+            
+            const words = currentQuote.text.split(' ');
+            const lines = [];
+            let currentLine = '';
+            
+            for (const word of words) {
+                const testLine = currentLine + (currentLine ? ' ' : '') + word;
+                if (ctx.measureText(testLine).width < 1000) {
+                    currentLine = testLine;
+                } else {
+                    lines.push(currentLine);
+                    currentLine = word;
+                }
+            }
+            if (currentLine) lines.push(currentLine);
+            
+            const startY = (canvas.height - lines.length * 60) / 2 + 20;
+            lines.forEach((line, i) => {
+                ctx.fillText(line, canvas.width / 2, startY + i * 60);
+            });
+            
+            // Author
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'italic 32px Georgia, serif';
+            ctx.fillText(`— ${currentQuote.author}`, canvas.width / 2, startY + lines.length * 60 + 40);
+            
+            // Category tag
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.2)';
+            // Category tag - draw rounded rectangle manually
+            function roundRect(ctx, x, y, w, h, r) {
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + w - r, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                ctx.lineTo(x + w, y + h - r);
+                ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                ctx.lineTo(x + r, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
+            }
+            roundRect(ctx, 50, 50, 200, 50, 25);
+            ctx.fill();
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText(currentQuote.category || 'Motivation', 70, 83);
+            
+            // Website branding
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.font = '18px Arial';
+            ctx.textAlign = 'right';
+            ctx.fillText('motivational-quote.org', canvas.width - 50, canvas.height - 30);
+            
+            // Download
+            const link = document.createElement('a');
+            link.download = 'quote-' + Date.now() + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
         }
 
         // Handle email subscription - stores locally and attempts backend sync
