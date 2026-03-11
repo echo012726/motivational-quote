@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Quotes - Motivational Quote</title>
+    <meta name="description" content="Search through 550+ inspirational quotes. Find the perfect quote by author, category, or keyword.">
+    <meta name="keywords" content="search quotes, find quotes, inspirational quotes search, quote database">
+    <meta name="author" content="Motivational Quote">
+    <meta property="og:title" content="Search Quotes - Motivational Quote">
+    <meta property="og:description" content="Search through 550+ inspirational quotes">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://motivational-quote.org/search">
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --secondary: #db2777;
+            --dark: #1e293b;
+            --light: #faf5ff;
+            --text: #334155;
+            --accent: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: var(--text); background: var(--light); }
+        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 2rem 0; margin-bottom: 2rem; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
+        header h1 { color: white; font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { color: rgba(255,255,255,0.9); }
+        .breadcrumb { margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .search-box { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .search-input { width: 100%; padding: 1rem 1.5rem; font-size: 1.1rem; border: 2px solid #e2e8f0; border-radius: 0.75rem; margin-bottom: 1rem; transition: border-color 0.3s; }
+        .search-input:focus { outline: none; border-color: var(--primary); }
+        .filters { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+        .filter-group { flex: 1; min-width: 200px; }
+        .filter-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--dark); }
+        .filter-group select { width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem; }
+        .search-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 0.75rem; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: transform 0.2s; }
+        .search-btn:hover { transform: scale(1.02); }
+        .results-info { margin-bottom: 1rem; font-size: 0.9rem; color: #64748b; }
+        .quote-grid { display: grid; gap: 1rem; margin-bottom: 2rem; }
+        .quote-card { background: white; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid var(--primary); transition: transform 0.2s; }
+        .quote-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .quote-text { font-size: 1.1rem; color: var(--dark); margin-bottom: 0.75rem; font-style: italic; }
+        .quote-author { font-weight: 600; color: var(--primary); }
+        .quote-category { display: inline-block; background: var(--light); color: var(--secondary); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; margin-left: 0.5rem; }
+        .quote-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
+        .action-btn { padding: 0.5rem 1rem; border: 1px solid #e2e8f0; background: white; border-radius: 0.5rem; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+        .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .popular-searches { background: white; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .popular-searches h3 { color: var(--dark); margin-bottom: 1rem; }
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 0.5rem 1rem; border-radius: 1rem; font-size: 0.9rem; cursor: pointer; transition: transform 0.2s; }
+        .tag:hover { transform: scale(1.05); }
+        .no-results { text-align: center; padding: 3rem; color: #64748b; }
+        .pagination { display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem; }
+        .page-btn { padding: 0.5rem 1rem; border: 1px solid #e2e8f0; background: white; border-radius: 0.5rem; cursor: pointer; }
+        .page-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        footer { text-align: center; padding: 2rem; color: #64748b; font-size: 0.9rem; }
+        @media (max-width: 768px) { header h1 { font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🔍 Search Quotes</h1>
+            <p>Find the perfect inspirational quote</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> → Search
+        </div>
+        
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search quotes by keyword, author, or topic...">
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Category</label>
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="motivation">Motivation</option>
+                        <option value="success">Success</option>
+                        <option value="life">Life</option>
+                        <option value="inspirational">Inspirational</option>
+                        <option value="wisdom">Wisdom</option>
+                        <option value="courage">Courage</option>
+                        <option value="happiness">Happiness</option>
+                        <option value="love">Love</option>
+                        <option value="friendship">Friendship</option>
+                        <option value="business">Business</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Author</label>
+                    <select id="authorFilter">
+                        <option value="">All Authors</option>
+                        <option value="confucius">Confucius</option>
+                        <option value="steve jobs">Steve Jobs</option>
+                        <option value="walt disney">Walt Disney</option>
+                        <option value="oprah winfrey">Oprah Winfrey</option>
+                        <option value="maya angelou">Maya Angelou</option>
+                        <option value="nelson mandela">Nelson Mandela</option>
+                    </select>
+                </div>
+            </div>
+            <button class="search-btn" onclick="searchQuotes()">Search Quotes</button>
+        </div>
+        
+        <div class="popular-searches">
+            <h3>🔥 Popular Searches</h3>
+            <div class="tag-cloud">
+                <span class="tag" onclick="quickSearch('success')">Success</span>
+                <span class="tag" onclick="quickSearch('motivation')">Motivation</span>
+                <span class="tag" onclick="quickSearch('life')">Life</span>
+                <span class="tag" onclick="quickSearch('dreams')">Dreams</span>
+                <span class="tag" onclick="quickSearch('courage')">Courage</span>
+                <span class="tag" onclick="quickSearch('happiness')">Happiness</span>
+                <span class="tag" onclick="quickSearch('wisdom')">Wisdom</span>
+                <span class="tag" onclick="quickSearch('business')">Business</span>
+            </div>
+        </div>
+        
+        <div class="results-info" id="resultsInfo"></div>
+        <div class="quote-grid" id="quoteGrid"></div>
+        <div class="pagination" id="pagination"></div>
+        
+        <footer>
+            <p>&copy; 2026 Motivational Quote. All rights reserved.</p>
+            <p><a href="/" style="color: var(--primary);">Home</a> | <a href="/subscribe" style="color: var(--primary);">Subscribe</a> | <a href="/widget" style="color: var(--primary);">Widget</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        let allQuotes = [];
+        
+        // Load quotes from JSON
+        async function loadQuotes() {
+            try {
+                const response = await fetch('/quotes.json');
+                const data = await response.json();
+                allQuotes = data.quotes || [];
+                displayRandomQuotes();
+            } catch (e) {
+                console.log('Using sample quotes');
+                allQuotes = getSampleQuotes();
+                displayRandomQuotes();
+            }
+        }
+        
+        function getSampleQuotes() {
+            return [
+                { text: "The only way to do great work is to love what you do.", author: "Steve Jobs", category: "motivation" },
+                { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs", category: "success" },
+                { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt", category: "inspirational" },
+                { text: "It is during our darkest moments that we must focus to see the light.", author: "Aristotle", category: "wisdom" },
+                { text: "The only impossible journey is the one you never begin.", author: "Tony Robbins", category: "motivation" },
+                { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill", category: "success" },
+                { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt", category: "motivation" },
+                { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb", category: "wisdom" },
+                { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs", category: "life" },
+                { text: "The only thing we have to fear is fear itself.", author: "Franklin D. Roosevelt", category: "courage" }
+            ];
+        }
+        
+        function displayRandomQuotes() {
+            const shuffled = [...allQuotes].sort(() => 0.5 - Math.random());
+            displayQuotes(shuffled.slice(0, 10));
+        }
+        
+        function searchQuotes() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const author = document.getElementById('authorFilter').value;
+            
+            let results = allQuotes;
+            
+            if (query) {
+                results = results.filter(q => 
+                    q.text.toLowerCase().includes(query) || 
+                    q.author.toLowerCase().includes(query)
+                );
+            }
+            
+            if (category) {
+                results = results.filter(q => q.category === category);
+            }
+            
+            if (author) {
+                results = results.filter(q => q.author.toLowerCase().includes(author));
+            }
+            
+            document.getElementById('resultsInfo').textContent = `Found ${results.length} quotes`;
+            displayQuotes(results.slice(0, 20));
+        }
+        
+        function quickSearch(term) {
+            document.getElementById('searchInput').value = term;
+            searchQuotes();
+        }
+        
+        function displayQuotes(quotes) {
+            const grid = document.getElementById('quoteGrid');
+            
+            if (quotes.length === 0) {
+                grid.innerHTML = '<div class="no-results">No quotes found. Try a different search.</div>';
+                return;
+            }
+            
+            grid.innerHTML = quotes.map(quote => `
+                <div class="quote-card">
+                    <p class="quote-text">"${quote.text}"</p>
+                    <p class="quote-author">— ${quote.author} <span class="quote-category">${quote.category}</span></p>
+                    <div class="quote-actions">
+                        <button class="action-btn" onclick="copyQuote('${quote.text.replace(/'/g, "\\'")} - ${quote.author}')">📋 Copy</button>
+                        <button class="action-btn" onclick="shareTwitter('${quote.text.replace(/'/g, "\\'")} - ${quote.author}')">🐦 Tweet</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function copyQuote(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Quote copied!');
+            });
+        }
+        
+        function shareTwitter(text) {
+            const url = encodeURIComponent(text);
+            window.open(`https://twitter.com/intent/tweet?text=${url}`, '_blank');
+        }
+        
+        // Enter key search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchQuotes();
+        });
+        
+        // Initial load
+        loadQuotes();
+    </script>
+</body>
+</html>

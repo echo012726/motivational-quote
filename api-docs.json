@@ -1,0 +1,166 @@
+{
+  "api_version": "1.0",
+  "endpoint": "https://motivational-quote.org/api/v1",
+  "description": "Free API for accessing inspirational quotes",
+  
+  "endpoints": {
+    "quote_of_the_day": {
+      "url": "/api/v1/quote-of-the-day",
+      "method": "GET",
+      "description": "Returns today's featured quote",
+      "example": {
+        "curl": "curl https://motivational-quote.org/api/v1/quote-of-the-day",
+        "response": {
+          "quote": "The only way to do great work is to love what you do.",
+          "author": "Steve Jobs",
+          "category": "success",
+          "date": "2026-03-03"
+        }
+      }
+    },
+    "random_quote": {
+      "url": "/api/v1/random",
+      "method": "GET",
+      "description": "Returns a random quote",
+      "parameters": {
+        "category": "optional - filter by category"
+      },
+      "example": {
+        "curl": "curl https://motivational-quote.org/api/v1/random",
+        "response": {
+          "quote": "Believe you can and you're halfway there.",
+          "author": "Theodore Roosevelt",
+          "category": "motivation"
+        }
+      }
+    },
+    "quotes_by_category": {
+      "url": "/api/v1/category/{category}",
+      "method": "GET",
+      "description": "Get quotes filtered by category",
+      "parameters": {
+        "category": "success, motivation, life, love, wisdom, courage, happiness, success, leadership, inspiration"
+      },
+      "example": {
+        "curl": "curl https://motivational-quote.org/api/v1/category/success",
+        "response": {
+          "quotes": [
+            {"quote": "...", "author": "..."},
+            {"quote": "...", "author": "..."}
+          ],
+          "count": 50
+        }
+      }
+    },
+    "search": {
+      "url": "/api/v1/search",
+      "method": "GET",
+      "description": "Search quotes by keyword",
+      "parameters": {
+        "q": "search term (required)"
+      },
+      "example": {
+        "curl": "curl 'https://motivational-quote.org/api/v1/search?q=success'",
+        "response": {
+          "results": [
+            {"quote": "...", "author": "..."}
+          ],
+          "total": 15
+        }
+      }
+    },
+    "daily_email": {
+      "url": "/api/v1/subscribe",
+      "method": "POST",
+      "description": "Subscribe to daily quote emails",
+      "body": {
+        "email": "user@example.com"
+      },
+      "example": {
+        "curl": "curl -X POST https://motivational-quote.org/api/v1/subscribe -H 'Content-Type: application/json' -d '{\"email\":\"user@example.com\"}'",
+        "response": {
+          "success": true,
+          "message": "Subscribed successfully"
+        }
+      }
+    }
+  },
+  
+  "categories": [
+    "motivation",
+    "success",
+    "life",
+    "love",
+    "wisdom",
+    "courage",
+    "happiness",
+    "leadership",
+    "inspiration",
+    "determination",
+    "perseverance",
+    "faith",
+    "friendship",
+    "knowledge",
+    "creativity",
+    "peace",
+    "hope",
+    "change",
+    "goals",
+    "positive"
+  ],
+  
+  "rate_limits": {
+    "free": "60 requests per hour",
+    "premium": "1000 requests per hour"
+  },
+  
+  "pricing": {
+    "free": {
+      "price": "$0",
+      "features": ["60 requests/hour", "Basic categories", "JSON format"]
+    },
+    "developer": {
+      "price": "$9/month",
+      "features": ["1000 requests/hour", "All categories", "JSON & XML", "Email support"]
+    },
+    "business": {
+      "price": "$29/month",
+      "features": ["10000 requests/hour", "Custom categories", "Bulk queries", "Priority support"]
+    }
+  },
+  
+  "integration_examples": {
+    "python": {
+      "language": "Python",
+      "code": "import requests\n\nresponse = requests.get('https://motivational-quote.org/api/v1/quote-of-the-day')\ndata = response.json()\nprint(f'\"{data[\"quote\"]}\" - {data[\"author\"]}')"
+    },
+    "javascript": {
+      "language": "JavaScript",
+      "code": "fetch('https://motivational-quote.org/api/v1/quote-of-the-day')\n  .then(response => response.json())\n  .then(data => console.log(`\"${data.quote}\" - ${data.author}`));"
+    },
+    "php": {
+      "language": "PHP",
+      "code": "$response = file_get_contents('https://motivational-quote.org/api/v1/quote-of-the-day');\n$data = json_decode($response, true);\necho \"\\\"{$data['quote']}\\\" - {$data['author']}\";"
+    }
+  },
+  
+  "use_cases": [
+    "Display daily quote on website footer",
+    "Include motivational quotes in email newsletters",
+    "Add inspiration to mobile app splash screen",
+    "Power Alexa/Google Home skills",
+    "Enhance chatbot responses",
+    "Social media automation"
+  ],
+  
+  "embed_code": {
+    "iframe": "<iframe src='https://motivational-quote.org/embed/daily' width='400' height='200' frameborder='0'></iframe>",
+    "button": "<script src='https://motivational-quote.org/js/widget.js'></script>",
+    "javascript": "<script>MQWidget.init({theme: 'light', size: 'medium'});</script>"
+  },
+  
+  "contact": {
+    "email": "api@motivational-quote.org",
+    "twitter": "@mqotd"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "site": {
+    "name": "Motivational Quote",
+    "title": "Daily Motivation",
+    "description": "Start your day with inspiring quotes to fuel your journey. Get daily motivation delivered to your screen.",
+    "url": "https://motivational-quote.org",
+    "author": "Marcus Sarmento",
+    "language": "en-US"
+  },
+  "social": {
+    "twitter": {
+      "handle": "@msarmento42",
+      "shareUrl": "https://twitter.com/intent/tweet",
+      "text": "Check out this inspiring quote:"
+    },
+    "facebook": {
+      "shareUrl": "https://www.facebook.com/sharer/sharer.php"
+    },
+    "linkedin": {
+      "shareUrl": "https://www.linkedin.com/shareArticle"
+    }
+  },
+  "email": {
+    "provider": "convertkit",
+    "placeholder": {
+      "heading": "Get Daily Motivation",
+      "subheading": "Subscribe to receive an inspiring quote every morning.",
+      "buttonText": "Subscribe",
+      "successMessage": "Thanks for subscribing! Check your email to confirm.",
+      "errorMessage": "Something went wrong. Please try again."
+    },
+    "apiPlaceholder": "https://api.convertkit.com/v3/forms/{FORM_ID}/subscribe",
+    "formId": "YOUR_FORM_ID_HERE"
+  },
+  "branding": {
+    "tagline": "Fuel Your Journey",
+    "showTagline": true
+  },
+  "features": {
+    "dailyQuote": true,
+    "randomQuote": true,
+    "shareButtons": true,
+    "emailSubscription": true,
+    "copyToClipboard": true
+  },
+  "colors": {
+    "primary": "#6366f1",
+    "secondary": "#8b5cf6",
+    "accent": "#f59e0b",
+    "background": "#0f172a",
+    "cardBackground": "#1e293b",
+    "text": "#f8fafc",
+    "textMuted": "#94a3b8"
+  }
+}

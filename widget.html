@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Quote Widget - Embeddable Widget</title>
+    <meta name="description" content="Embed the Daily Quote Widget on your website. Beautiful, lightweight, and free.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .preview-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .preview-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        /* Widget Preview Styles */
+        .quote-widget-preview {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-widget-preview::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 150px;
+            color: rgba(102, 126, 234, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: #333;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .quote-author::before {
+            content: "— ";
+        }
+
+        .widget-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .control-group select,
+        .control-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .control-group select:focus,
+        .control-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: #5a6fd6;
+            transform: translateY(-2px);
+        }
+
+        .embed-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .embed-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .embed-code {
+            background: #2d2d2d;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .embed-code pre {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .embed-code .tag { color: #f92672; }
+        .embed-code .attr { color: #a6e22e; }
+        .embed-code .value { color: #e6db74; }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #218838;
+        }
+
+        .copy-btn.copied {
+            background: #17a2b8;
+        }
+
+        .features-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .features-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .demo-sites {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .demo-sites h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .demo-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .demo-logo {
+            width: 120px;
+            height: 60px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .preview-section,
+            .embed-section,
+            .features-section,
+            .demo-sites {
+                padding: 20px;
+            }
+
+            .quote-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📢 Daily Quote Widget</h1>
+            <p>Beautiful, embeddable quote widget for your website</p>
+        </header>
+
+        <div class="preview-section">
+            <h2>🎨 Live Preview</h2>
+            
+            <div class="quote-widget-preview" id="widgetPreview">
+                <div class="quote-text" id="previewText">"The only way to do great work is to love what you do."</div>
+                <div class="quote-author" id="previewAuthor">Steve Jobs</div>
+            </div>
+
+            <div class="widget-controls">
+                <div class="control-group">
+                    <label>Theme</label>
+                    <select id="themeSelect">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="gradient">Gradient</option>
+                        <option value="minimal">Minimal</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Size</label>
+                    <select id="sizeSelect">
+                        <option value="small">Small</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Category</label>
+                    <select id="categorySelect">
+                        <option value="random" selected>Random</option>
+                        <option value="motivation">Motivation</option>
+                        <option value="success">Success</option>
+                        <option value="life">Life</option>
+                        <option value="wisdom">Wisdom</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="refresh-btn" onclick="refreshQuote()">
+                🔄 Get New Quote
+            </button>
+        </div>
+
+        <div class="embed-section">
+            <h2>📋 Embed Code</h2>
+            
+            <div class="embed-code">
+                <pre>&lt;div id="daily-quote-widget" data-theme="gradient" data-size="medium" data-category="random"&gt;&lt;/div&gt;
+&lt;script src="https://motivational-quote.org/widget.js"&gt;&lt;/script&gt;</pre>
+            </div>
+
+            <button class="copy-btn" onclick="copyEmbedCode()">
+                📋 Copy Embed Code
+            </button>
+
+            <h3 style="margin: 30px 0 15px; color: #333;">Customization Options</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f8f9fa;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Attribute</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Values</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>data-theme</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>light</code>, <code>dark</code>, <code>gradient</code>, <code>minimal</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Widget color scheme</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>data-size</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>small</code>, <code>medium</code>, <code>large</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Widget size</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>data-category</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>random</code>, <code>motivation</code>, <code>success</code>, <code>life</code>, <code>wisdom</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Quote category</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>data-show-author</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>true</code>, <code>false</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Show author name</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>data-show-tweet</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>true</code>, <code>false</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Show tweet button</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="features-section">
+            <h2>✨ Features</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🌐 Free Forever</h3>
+                    <p>No hidden fees, no paid plans. Completely free to use on any website.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⚡ Lightning Fast</h3>
+                    <p>Lightweight script under 10KB. Won't slow down your website.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📱 Fully Responsive</h3>
+                    <p>Looks great on desktop, tablet, and mobile devices.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎨 4 Beautiful Themes</h3>
+                    <p>Light, dark, gradient, and minimal designs to match your brand.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📚 20+ Categories</h3>
+                    <p>Quotes from motivation, success, life, wisdom, love, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔄 Auto-Refresh</h3>
+                    <p>New quote each day, or manual refresh option for visitors.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📤 Social Sharing</h3>
+                    <p>Built-in buttons to share quotes on Twitter, Facebook, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔌 Easy Integration</h3>
+                    <p>Simply copy and paste the embed code. No coding required.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-sites">
+            <h2>🏢 Used On</h2>
+            <p style="margin-bottom: 20px; color: #666;">Join thousands of websites using the Daily Quote Widget</p>
+            
+            <div class="demo-logos">
+                <div class="demo-logo">Blog</div>
+                <div class="demo-logo">News Site</div>
+                <div class="demo-logo">Portfolio</div>
+                <div class="demo-logo">Education</div>
+                <div class="demo-logo">Business</div>
+                <div class="demo-logo">+ More</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Powered by <a href="https://motivational-quote.org">Motivational Quote</a></p>
+            <p>500+ quotes | Updated daily | 100% Free</p>
+        </footer>
+    </div>
+
+    <script>
+        const quotes = {
+            motivation: [
+                { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+                { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+                { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+                { text: "Everything you've ever wanted is on the other side of fear.", author: "George Addair" },
+                { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" }
+            ],
+            success: [
+                { text: "Success usually comes to those who are too busy to be looking for it.", author: "Henry David Thoreau" },
+                { text: "Don't be afraid to give up the good to go for the great.", author: "John D. Rockefeller" },
+                { text: "I find that the harder I work, the more luck I seem to have.", author: "Thomas Jefferson" },
+                { text: "Success is walking from failure to failure with no loss of enthusiasm.", author: "Winston Churchill" },
+                { text: "The secret of success is to do the common thing uncommonly well.", author: "John D. Rockefeller Jr." }
+            ],
+            life: [
+                { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+                { text: "The purpose of our lives is to be happy.", author: "Dalai Lama" },
+                { text: "Life is really simple, but we insist on making it complicated.", author: "Confucius" },
+                { text: "In the end, it's not the years in your life that count. It's the life in your years.", author: "Abraham Lincoln" },
+                { text: "Life is short, and it is up to you to make it sweet.", author: "Sarah Louise Delany" }
+            ],
+            wisdom: [
+                { text: "The only true wisdom is in knowing you know nothing.", author: "Socrates" },
+                { text: "The journey of a thousand miles begins with one step.", author: "Lao Tzu" },
+                { text: "Knowledge speaks, but wisdom listens.", author: "Jimi Hendrix" },
+                { text: "The fool doth think he is wise, but the wise man knows himself to be a fool.", author: "William Shakespeare" },
+                { text: "By three methods we may learn wisdom: First, by reflection, which is noblest; Second, by imitation, which is easiest; and third by experience, which is the bitterest.", author: "Confucius" }
+            ]
+        };
+
+        function getRandomQuote(category) {
+            let categoryQuotes;
+            if (category === 'random') {
+                const allCategories = Object.keys(quotes);
+                category = allCategories[Math.floor(Math.random() * allCategories.length)];
+            }
+            categoryQuotes = quotes[category] || quotes.motivation;
+            return categoryQuotes[Math.floor(Math.random() * categoryQuotes.length)];
+        }
+
+        function refreshQuote() {
+            const category = document.getElementById('categorySelect').value;
+            const quote = getRandomQuote(category);
+            document.getElementById('previewText').textContent = `"${quote.text}"`;
+            document.getElementById('previewAuthor').textContent = quote.author;
+        }
+
+        function updateTheme(theme) {
+            const widget = document.getElementById('widgetPreview');
+            const themes = {
+                light: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+                dark: 'linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%)',
+                gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                minimal: '#ffffff'
+            };
+            widget.style.background = themes[theme];
+        }
+
+        document.getElementById('themeSelect').addEventListener('change', (e) => updateTheme(e.target.value));
+        document.getElementById('categorySelect').addEventListener('change', refreshQuote);
+
+        function copyEmbedCode() {
+            const code = `<div id="daily-quote-widget" data-theme="gradient" data-size="medium" data-category="random"></div>
+<script src="https://motivational-quote.org/widget.js"><\/script>`;
+            navigator.clipboard.writeText(code);
+            
+            const btn = document.querySelector('.copy-btn');
+            btn.innerHTML = '✓ Copied!';
+            btn.classList.add('copied');
+            
+            setTimeout(() => {
+                btn.innerHTML = '📋 Copy Embed Code';
+                btn.classList.remove('copied');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
