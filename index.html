@@ -57,9 +57,6 @@
                 "@type": "ImageObject",
                 "url": "https://motivational-quote.org/logo.png"
             }
-
-        // Initialize
-        loadQuotes();
         },
         "mainEntityOfPage": {
             "@type": "WebPage",
@@ -87,9 +84,6 @@
                 "@type": "Answer",
                 "text": "Subscribe to our daily email newsletter to receive inspiring quotes every morning directly in your inbox."
             }
-
-        // Initialize
-        loadQuotes();
         }, {
             "@type": "Question",
             "name": "Can I share quotes on social media?",
@@ -97,9 +91,6 @@
                 "@type": "Answer",
                 "text": "Yes! You can share quotes on Twitter, Facebook, WhatsApp, LinkedIn, and Reddit with just one click."
             }
-
-        // Initialize
-        loadQuotes();
         }, {
             "@type": "Question",
             "name": "How do I save favorite quotes?",
@@ -107,9 +98,6 @@
                 "@type": "Answer",
                 "text": "Click the star button on any quote to save it to your favorites. You can view and manage your saved quotes anytime."
             }
-
-        // Initialize
-        loadQuotes();
         }]
     }
     </script>
@@ -127,9 +115,6 @@
             --success: #22c55e;
         }
 
-        // Initialize
-        loadQuotes();
-
         [data-theme="light"] {
             --bg: #f8fafc;
             --card-bg: #ffffff;
@@ -138,17 +123,11 @@
             --border: #e2e8f0;
         }
 
-        // Initialize
-        loadQuotes();
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        // Initialize
-        loadQuotes();
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -162,24 +141,15 @@
             padding: 20px;
         }
 
-        // Initialize
-        loadQuotes();
-
         .container {
             max-width: 700px;
             width: 100%;
             text-align: center;
         }
 
-        // Initialize
-        loadQuotes();
-
         header {
             margin-bottom: 30px;
         }
-
-        // Initialize
-        loadQuotes();
 
         .logo {
             font-size: 1.5rem;
@@ -191,17 +161,11 @@
             -webkit-text-fill-color: transparent;
         }
 
-        // Initialize
-        loadQuotes();
-
         .tagline {
             color: var(--accent);
             font-size: 1rem;
             margin-top: 8px;
         }
-
-        // Initialize
-        loadQuotes();
 
         /* Ad Space - Top */
         .ad-space-top {
@@ -217,9 +181,6 @@
             overflow: hidden;
         }
 
-        // Initialize
-        loadQuotes();
-
         .quote-card {
             background: var(--card-bg);
             border-radius: 24px;
@@ -228,9 +189,6 @@
             position: relative;
             overflow: hidden;
         }
-
-        // Initialize
-        loadQuotes();
 
         .quote-card::before {
             content: '"';
@@ -244,16 +202,10 @@
             line-height: 1;
         }
 
-        // Initialize
-        loadQuotes();
-
         .quote-icon {
             font-size: 3rem;
             margin-bottom: 20px;
         }
-
-        // Initialize
-        loadQuotes();
 
         .quote-text {
             font-size: 1.6rem;
@@ -264,24 +216,15 @@
             z-index: 1;
         }
 
-        // Initialize
-        loadQuotes();
-
         .quote-author {
             color: var(--text-muted);
             font-size: 1.1rem;
             font-style: italic;
         }
 
-        // Initialize
-        loadQuotes();
-
         .quote-author::before {
             content: '— ';
         }
-
-        // Initialize
-        loadQuotes();
 
         .category-tag {
             display: inline-block;
@@ -295,9 +238,6 @@
             text-transform: uppercase;
         }
 
-        // Initialize
-        loadQuotes();
-
         .actions {
             display: flex;
             justify-content: center;
@@ -305,9 +245,6 @@
             margin-top: 30px;
             flex-wrap: wrap;
         }
-
-        // Initialize
-        loadQuotes();
 
         .action-btn {
             background: var(--bg);
@@ -323,16 +260,10 @@
             transition: all 0.3s;
         }
 
-        // Initialize
-        loadQuotes();
-
         .action-btn:hover {
             border-color: var(--primary);
             transform: translateY(-2px);
         }
-
-        // Initialize
-        loadQuotes();
 
         .action-btn.primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -340,15 +271,9 @@
             color: white;
         }
 
-        // Initialize
-        loadQuotes();
-
         .action-btn.primary:hover {
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
         }
-
-        // Initialize
-        loadQuotes();
 
         /* Email Signup Section */
         .email-signup {
@@ -359,9 +284,6 @@
             border: 1px solid rgba(99, 102, 241, 0.3);
         }
 
-        // Initialize
-        loadQuotes();
-
         .email-signup h3 {
             font-size: 1.3rem;
             margin-bottom: 10px;
@@ -371,17 +293,11 @@
             gap: 8px;
         }
 
-        // Initialize
-        loadQuotes();
-
         .email-signup p {
             color: var(--text-muted);
             margin-bottom: 20px;
             font-size: 0.95rem;
         }
-
-        // Initialize
-        loadQuotes();
 
         .email-form {
             display: flex;
@@ -389,9 +305,6 @@
             max-width: 400px;
             margin: 0 auto;
         }
-
-        // Initialize
-        loadQuotes();
 
         .email-form input {
             flex: 1;
@@ -403,16 +316,10 @@
             font-size: 1rem;
         }
 
-        // Initialize
-        loadQuotes();
-
         .email-form input:focus {
             outline: none;
             border-color: var(--primary);
         }
-
-        // Initialize
-        loadQuotes();
 
         .email-form button {
             padding: 12px 20px;
@@ -425,16 +332,10 @@
             transition: all 0.3s;
         }
 
-        // Initialize
-        loadQuotes();
-
         .email-form button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
         }
-
-        // Initialize
-        loadQuotes();
 
         .email-success {
             display: none;
@@ -443,24 +344,15 @@
             font-weight: 500;
         }
 
-        // Initialize
-        loadQuotes();
-
         .email-success.show {
             display: block;
         }
-
-        // Initialize
-        loadQuotes();
 
         .date-display {
             margin-top: 25px;
             color: var(--text-muted);
             font-size: 0.9rem;
         }
-
-        // Initialize
-        loadQuotes();
 
         /* Social Share */
         .share-section {
@@ -469,17 +361,11 @@
             border-top: 1px solid var(--border);
         }
 
-        // Initialize
-        loadQuotes();
-
         .share-section span {
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-right: 10px;
         }
-
-        // Initialize
-        loadQuotes();
 
         /* Category Filter */
         .category-filter {
@@ -489,9 +375,6 @@
             justify-content: center;
             margin-bottom: 25px;
         }
-
-        // Initialize
-        loadQuotes();
 
         .filter-btn {
             background: var(--bg);
@@ -504,17 +387,11 @@
             transition: all 0.3s;
         }
 
-        // Initialize
-        loadQuotes();
-
         .filter-btn:hover, .filter-btn.active {
             background: var(--primary);
             border-color: var(--primary);
             color: white;
         }
-
-        // Initialize
-        loadQuotes();
 
         /* Favorites Section */
         .favorites-section {
@@ -525,18 +402,12 @@
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
-        // Initialize
-        loadQuotes();
-
         .favorites-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
-
-        // Initialize
-        loadQuotes();
 
         .favorites-header h3 {
             font-size: 1rem;
@@ -545,16 +416,10 @@
             gap: 8px;
         }
 
-        // Initialize
-        loadQuotes();
-
         .favorites-list {
             max-height: 200px;
             overflow-y: auto;
         }
-
-        // Initialize
-        loadQuotes();
 
         .favorite-item {
             padding: 12px;
@@ -565,15 +430,9 @@
             transition: all 0.3s;
         }
 
-        // Initialize
-        loadQuotes();
-
         .favorite-item:hover {
             background: var(--card-bg);
         }
-
-        // Initialize
-        loadQuotes();
 
         .favorite-item .quote-text {
             font-size: 0.95rem;
@@ -581,15 +440,9 @@
             line-height: 1.4;
         }
 
-        // Initialize
-        loadQuotes();
-
         .favorite-item .quote-author {
             font-size: 0.85rem;
         }
-
-        // Initialize
-        loadQuotes();
 
         .favorite-remove {
             float: right;
@@ -598,24 +451,15 @@
             font-size: 1rem;
         }
 
-        // Initialize
-        loadQuotes();
-
         .favorite-remove:hover {
             color: var(--danger);
         }
-
-        // Initialize
-        loadQuotes();
 
         .empty-favorites {
             text-align: center;
             color: var(--text-muted);
             font-size: 0.9rem;
         }
-
-        // Initialize
-        loadQuotes();
 
         /* Toast Notification */
         .toast {
@@ -633,15 +477,9 @@
             z-index: 1000;
         }
 
-        // Initialize
-        loadQuotes();
-
         .toast.show {
             opacity: 1;
         }
-
-        // Initialize
-        loadQuotes();
 
         /* Share Buttons */
         .share-btn {
@@ -658,16 +496,10 @@
             gap: 6px;
         }
 
-        // Initialize
-        loadQuotes();
-
         .share-btn:hover {
             transform: translateY(-2px);
             border-color: var(--primary);
         }
-
-        // Initialize
-        loadQuotes();
 
         .share-btn.whatsapp:hover { border-color: #25D366; }
         .share-btn.linkedin:hover { border-color: #0A66C2; }
@@ -689,25 +521,16 @@
             overflow: hidden;
         }
 
-        // Initialize
-        loadQuotes();
-
         footer {
             margin-top: 40px;
             color: var(--text-muted);
             font-size: 0.85rem;
         }
 
-        // Initialize
-        loadQuotes();
-
         footer a {
             color: var(--primary);
             text-decoration: none;
         }
-
-        // Initialize
-        loadQuotes();
 
         @media (max-width: 600px) {
             .quote-text { font-size: 1.3rem; }
@@ -716,9 +539,6 @@
             .action-btn { justify-content: center; }
             .email-form { flex-direction: column; }
         }
-
-        // Initialize
-        loadQuotes();
     </style>
 <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VF1RWJ4JV2"></script>
@@ -887,13 +707,7 @@
                     {"text": "Success is not final, failure is not fatal: it is the courage to continue that counts.", "author": "Winston Churchill", "category": "Success"}
                 ];
             }
-
-        // Initialize
-        loadQuotes();
         }
-
-        // Initialize
-        loadQuotes();
 
         let currentQuote = null;
 
@@ -906,17 +720,11 @@
             return quotes[index];
         }
 
-        // Initialize
-        loadQuotes();
-
         // Get random quote
         function getRandomQuote() {
             const index = Math.floor(Math.random() * quotes.length);
             return quotes[index];
         }
-
-        // Initialize
-        loadQuotes();
 
         // Display quote
         function displayQuote(quote) {
@@ -931,17 +739,11 @@
                 if (btn.dataset.category === 'all' || btn.dataset.category === quote.category) {
                     btn.classList.add('active');
                 }
-
-        // Initialize
-        loadQuotes();
             });
             
             // Update quote schema for SEO
             updateQuoteSchema(quote);
         }
-
-        // Initialize
-        loadQuotes();
 
         // New random quote
         function newQuote(filteredCategory = null) {
@@ -957,9 +759,6 @@
             displayQuote(newQ);
         }
 
-        // Initialize
-        loadQuotes();
-
         // Filter quotes by category
         function filterQuotes(category) {
             // Update active button
@@ -972,13 +771,7 @@
             } else {
                 newQuote(category);
             }
-
-        // Initialize
-        loadQuotes();
         }
-
-        // Initialize
-        loadQuotes();
 
         // Favorites management
         let favorites = JSON.parse(localStorage.getItem('quoteFavorites') || '[]');
@@ -996,15 +789,9 @@
                 if (favorites.length > 20) favorites.pop(); // Keep max 20
                 showToast('Quote saved to favorites!');
             }
-
-        // Initialize
-        loadQuotes();
             
             localStorage.setItem('quoteFavorites', JSON.stringify(favorites));
         }
-
-        // Initialize
-        loadQuotes();
 
         function showFavorites() {
             const section = document.getElementById('favoritesSection');
@@ -1021,31 +808,19 @@
                     </div>
                 `).join('');
             }
-
-        // Initialize
-        loadQuotes();
             
             section.style.display = 'block';
         }
 
-        // Initialize
-        loadQuotes();
-
         function hideFavorites() {
             document.getElementById('favoritesSection').style.display = 'none';
         }
-
-        // Initialize
-        loadQuotes();
 
         function removeFavorite(index) {
             favorites.splice(index, 1);
             localStorage.setItem('quoteFavorites', JSON.stringify(favorites));
             showFavorites();
         }
-
-        // Initialize
-        loadQuotes();
 
         // Toast notification
         function showToast(message) {
@@ -1055,16 +830,10 @@
                 toast.className = 'toast';
                 document.body.appendChild(toast);
             }
-
-        // Initialize
-        loadQuotes();
             toast.textContent = message;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
-
-        // Initialize
-        loadQuotes();
 
         // Copy quote
         async function copyQuote() {
@@ -1083,13 +852,7 @@
                 document.body.removeChild(textarea);
                 showToast('Quote copied!');
             }
-
-        // Initialize
-        loadQuotes();
         }
-
-        // Initialize
-        loadQuotes();
 
         // Share on Twitter
         function shareTwitter() {
@@ -1097,9 +860,6 @@
             const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}\n\n#motivation #quotes`);
             window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
         }
-
-        // Initialize
-        loadQuotes();
 
         // Generate Shareable Quote Image
         function generateQuoteImage() {
@@ -1147,9 +907,6 @@
             showToast("Quote image downloaded!");
         }
 
-        // Initialize
-        loadQuotes();
-
         function wrapText(ctx, text, maxWidth) {
             const words = text.split(" ");
             const lines = [];
@@ -1163,16 +920,10 @@
                 } else {
                     currentLine = testLine;
                 }
-
-        // Initialize
-        loadQuotes();
             });
             lines.push(currentLine.trim());
             return lines;
         }
-
-        // Initialize
-        loadQuotes();
 
         // Share on Facebook
         function shareFacebook() {
@@ -1182,18 +933,12 @@
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`, '_blank');
         }
 
-        // Initialize
-        loadQuotes();
-
         // Share on WhatsApp
         function shareWhatsApp() {
             if (!currentQuote) return;
             const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}\n\n⭐ Daily Motivation from https://motivational-quote.org`);
             window.open(`https://wa.me/?text=${text}`, '_blank');
         }
-
-        // Initialize
-        loadQuotes();
 
         // Share on LinkedIn
         function shareLinkedIn() {
@@ -1203,9 +948,6 @@
             window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
         }
 
-        // Initialize
-        loadQuotes();
-
         // Share on Reddit
         function shareReddit() {
             if (!currentQuote) return;
@@ -1213,9 +955,6 @@
             const url = encodeURIComponent('https://motivational-quote.org');
             window.open(`https://reddit.com/submit?url=${url}&title=${text}`, '_blank');
         }
-
-        // Initialize
-        loadQuotes();
 
         // Handle email subscription - stores locally and attempts backend sync
         async function handleSubscribe(event) {
@@ -1246,9 +985,6 @@
                     submitBtn.disabled = false;
                     return;
                 }
-
-        // Initialize
-        loadQuotes();
                 
                 subscribers.push({ email, date: new Date().toISOString(), quote: getDailyQuote().text });
                 localStorage.setItem('quoteSubscribers', JSON.stringify(subscribers));
@@ -1263,22 +999,13 @@
                 submitBtn.textContent = 'Subscribe';
                 submitBtn.disabled = false;
             }
-
-        // Initialize
-        loadQuotes();
         }
-
-        // Initialize
-        loadQuotes();
 
         // Set today's date
         function setDate() {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-US', options);
         }
-
-        // Initialize
-        loadQuotes();
 
         // Initialize AdSense - load all ad units
         (adsbygoogle = window.adsbygoogle || []).push({});
@@ -1300,9 +1027,6 @@
             };
             document.getElementById('quote-schema').textContent = JSON.stringify(schema);
         }
-
-        // Initialize
-        loadQuotes();
             const html = document.documentElement;
             const btn = document.querySelector('.theme-toggle');
             const currentTheme = html.getAttribute('data-theme');
@@ -1313,9 +1037,6 @@
             btn.textContent = newTheme === 'light' ? '🌙' : '☀️';
         }
 
-        // Initialize
-        loadQuotes();
-
         // Load saved theme preference
         (function() {
             const savedTheme = localStorage.getItem('theme');
@@ -1323,9 +1044,6 @@
                 document.documentElement.setAttribute('data-theme', 'light');
                 document.querySelector('.theme-toggle').textContent = '☀️';
             }
-
-        // Initialize
-        loadQuotes();
         })();
     </script>
 
@@ -1357,15 +1075,9 @@
             document.getElementById('podQuoteAuthor').innerText = '- ' + currentQuote.author;
             document.getElementById('podModal').style.display = 'flex';
         }
-
-        // Initialize
-        loadQuotes();
         function closePodModal() {
             document.getElementById('podModal').style.display = 'none';
         }
-
-        // Initialize
-        loadQuotes();
         function checkoutPod() {
             const size = document.getElementById('podSize').value;
             const sizeText = document.getElementById('podSize').options[document.getElementById('podSize').selectedIndex].text;
@@ -1374,9 +1086,6 @@
                 showToast('Please select a quote first');
                 return;
             }
-
-        // Initialize
-        loadQuotes();
             
             // Show loading
             showToast('Preparing your custom poster...');
@@ -1397,8 +1106,6 @@
                 showToast('Redirected to Printful - complete your order there!');
             }, 1500);
         }
-
-        // Initialize
         loadQuotes();
     </script>
 
