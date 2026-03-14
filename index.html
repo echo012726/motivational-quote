@@ -691,440 +691,229 @@
     </div>
 
     <script>
-        // Quotes data - loaded from external JSON file
-        let quotes = [
-                    {"text": "The only way to do great work is to love what you do.", "author": "Steve Jobs", "category": "Success"},
-                    {"text": "Believe you can and you're halfway there.", "author": "Theodore Roosevelt", "category": "Motivation"},
-                    {"text": "Success is not final, failure is not fatal.", "author": "Winston Churchill", "category": "Success"},
-                    {"text": "The future belongs to those who believe in the beauty of their dreams.", "author": "Eleanor Roosevelt", "category": "Dreams"},
-                    {"text": "It does not matter how slowly you go as long as you do not stop.", "author": "Confucius", "category": "Wisdom"}
-                ];
-        
-        // Fetch quotes from JSON file
-        async function loadQuotes() {
-            try {
-                const response = await fetch('quotes.json');
-                quotes = await response.json();
-                showDailyQuote();
-            } catch (error) {
-                console.error("Error:", error); alert("Error: " + error);
-                // Fallback quotes
-                quotes = [
-                    {"text": "The only way to do great work is to love what you do.", "author": "Steve Jobs", "category": "Success"},
-                    {"text": "Believe you can and you're halfway there.", "author": "Theodore Roosevelt", "category": "Motivation"},
-                    {"text": "Success is not final, failure is not fatal: it is the courage to continue that counts.", "author": "Winston Churchill", "category": "Success"}
-                ];
-                showDailyQuote();
-            }
+
+// Global state
+let quotes = [];
+let currentQuote = null;
+let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+// Quotes data inline fallback
+const fallbackQuotes = [
+    {"text": "The only way to do great work is to love what you do.", "author": "Steve Jobs", "category": "Success"},
+    {"text": "Believe you can and you're halfway there.", "author": "Theodore Roosevelt", "category": "Motivation"},
+    {"text": "Success is not final, failure is not fatal: it is the courage to continue that counts.", "author": "Winston Churchill", "category": "Success"}
+];
+
+async function loadQuotes() {
+    try {
+        const response = await fetch('quotes.json');
+        quotes = await response.json();
+    } catch (error) {
+        console.error('Error loading quotes:', error);
+        quotes = fallbackQuotes;
+    }
+    showDailyQuote();
+}
+
+function getDailyQuote() {
+    const today = new Date();
+    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+    return quotes[dayOfYear % quotes.length] || quotes[0];
+}
+
+function displayQuote(quote) {
+    currentQuote = quote;
+    document.getElementById('quoteText').textContent = quote.text;
+    document.getElementById('quoteAuthor').textContent = quote.author;
+    document.getElementById('categoryTag').textContent = quote.category;
+    
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.category === 'all' || btn.dataset.category === quote.category) {
+            btn.classList.add('active');
         }
+    });
+    
+    updateQuoteSchema(quote);
+}
 
-        let currentQuote = null;
+function showDailyQuote() {
+    if (quotes.length > 0) displayQuote(getDailyQuote());
+}
 
+function newQuote(filteredCategory = null) {
+    let pool = quotes;
+    if (filteredCategory && filteredCategory !== 'all') {
+        pool = quotes.filter(q => q.category === filteredCategory);
+    }
+    if (pool.length > 0) {
+        displayQuote(pool[Math.floor(Math.random() * pool.length)]);
+    }
+}
 
-        // Get daily quote based on date (same quote all day)
-        function getDailyQuote() {
-            const today = new Date();
-            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-            const index = dayOfYear % quotes.length;
-            return quotes[index];
-        }
+function filterQuotes(category) {
+    newQuote(category);
+}
 
-        // Show daily quote
-        function showDailyQuote() {
-            if (quotes.length > 0) {
-                displayQuote(getDailyQuote());
-            }
-        }
+function toggleFavorite() {
+    if (!currentQuote) return;
+    const exists = favorites.findIndex(f => f.text === currentQuote.text);
+    if (exists >= 0) {
+        favorites.splice(exists, 1);
+        showToast('Removed from favorites');
+    } else {
+        favorites.push(currentQuote);
+        showToast('Added to favorites!');
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
 
-        // Get random quote
-        function getRandomQuote() {
-            const index = Math.floor(Math.random() * quotes.length);
-            return quotes[index];
-        }
-
-        // Display quote
-        function displayQuote(quote) {
-            currentQuote = quote;
-            document.getElementById('quoteText').textContent = quote.text;
-            document.getElementById('quoteAuthor').textContent = quote.author;
-            document.getElementById('categoryTag').textContent = quote.category;
-            
-            // Update active category filter
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.category === 'all' || btn.dataset.category === quote.category) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Update quote schema for SEO
-            updateQuoteSchema(quote);
-        }
-
-        // New random quote
-        function newQuote(filteredCategory = null) {
-            let newQ;
-            let pool = filteredCategory && filteredCategory !== 'all' 
-                ? quotes.filter(q => q.category === filteredCategory)
-                : quotes;
-            
-            do {
-                const index = Math.floor(Math.random() * pool.length);
-                newQ = pool[index];
-            } while (newQ.text === currentQuote?.text && pool.length > 1);
-            displayQuote(newQ);
-        }
-
-        // Filter quotes by category
-        function filterQuotes(category) {
-            // Update active button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.category === category);
-            });
-            
-            if (category === 'all') {
-                newQuote();
-            } else {
-                newQuote(category);
-            }
-        }
-
-        // Favorites management
-        let favorites = JSON.parse(localStorage.getItem('quoteFavorites') || '[]');
-
-        function toggleFavorite() {
-            if (!currentQuote) return;
-            
-            const exists = favorites.findIndex(f => f.text === currentQuote.text);
-            
-            if (exists >= 0) {
-                favorites.splice(exists, 1);
-                showToast('Quote removed from favorites');
-            } else {
-                favorites.unshift(currentQuote);
-                if (favorites.length > 20) favorites.pop(); // Keep max 20
-                showToast('Quote saved to favorites!');
-            }
-            
-            localStorage.setItem('quoteFavorites', JSON.stringify(favorites));
-        }
-
-        function showFavorites() {
-            const section = document.getElementById('favoritesSection');
-            const list = document.getElementById('favoritesList');
-            
-            if (favorites.length === 0) {
-                list.innerHTML = '<div class="empty-favorites">No saved quotes yet. Click ⭐ to save your favorites!</div>';
-            } else {
-                list.innerHTML = favorites.map((fav, index) => `
-                    <div class="favorite-item" onclick="displayQuote(quotes.find(q => q.text === '${fav.text.replace(/'/g, "\\'")}'))">
-                        <span class="favorite-remove" onclick="event.stopPropagation(); removeFavorite(${index})">✕</span>
-                        <p class="quote-text">${fav.text}</p>
-                        <p class="quote-author">${fav.author}</p>
-                    </div>
-                `).join('');
-            }
-            
-            section.style.display = 'block';
-        }
-
-        function hideFavorites() {
-            document.getElementById('favoritesSection').style.display = 'none';
-        }
-
-        function removeFavorite(index) {
-            favorites.splice(index, 1);
-            localStorage.setItem('quoteFavorites', JSON.stringify(favorites));
-            showFavorites();
-        }
-
-        // Toast notification
-        function showToast(message) {
-            let toast = document.querySelector('.toast');
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.className = 'toast';
-                document.body.appendChild(toast);
-            }
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
-        }
-
-        // Copy quote
-        async function copyQuote() {
-            if (!currentQuote) return;
-            const text = `"${currentQuote.text}" — ${currentQuote.author}`;
-            try {
-                await navigator.clipboard.writeText(text);
-                showToast('Quote copied to clipboard!');
-            } catch (err) {
-                // Fallback
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                showToast('Quote copied!');
-            }
-        }
-
-        // Share on Twitter
-        function shareTwitter() {
-            if (!currentQuote) return;
-            const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}\n\n#motivation #quotes`);
-            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
-        }
-
-        // Generate Shareable Quote Image
-        function generateQuoteImage() {
-            if (!currentQuote) return;
-            
-            const canvas = document.createElement("canvas");
-            canvas.width = 1200;
-            canvas.height = 630;
-            const ctx = canvas.getContext("2d");
-            
-            // Gradient background
-            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, "#6366f1");
-            gradient.addColorStop(1, "#8b5cf6");
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Quote text
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 48px Georgia, serif";
-            ctx.textAlign = "center";
-            const text = """ + currentQuote.text + """;
-            const lines = wrapText(ctx, text, 1000);
-            let y = 200;
-            lines.forEach(line => {
-                ctx.fillText(line, canvas.width / 2, y);
-                y += 60;
-            });
-            
-            // Author
-            ctx.font = "32px Arial";
-            ctx.fillStyle = "#e0e7ff";
-            ctx.fillText("— " + currentQuote.author, canvas.width / 2, y + 40);
-            
-            // Website branding
-            ctx.font = "24px Arial";
-            ctx.fillStyle = "#c7d2fe";
-            ctx.fillText("motivational-quote.org", canvas.width / 2, canvas.height - 40);
-            
-            // Download
-            const link = document.createElement("a");
-            link.download = "quote-" + Date.now() + ".png";
-            link.href = canvas.toDataURL("image/png");
-            link.click();
-            showToast("Quote image downloaded!");
-        }
-
-        function wrapText(ctx, text, maxWidth) {
-            const words = text.split(" ");
-            const lines = [];
-            let currentLine = "";
-            
-            words.forEach(word => {
-                const testLine = currentLine + word + " ";
-                if (ctx.measureText(testLine).width > maxWidth && currentLine !== "") {
-                    lines.push(currentLine.trim());
-                    currentLine = word + " ";
-                } else {
-                    currentLine = testLine;
-                }
-            });
-            lines.push(currentLine.trim());
-            return lines;
-        }
-
-        // Share on Facebook
-        function shareFacebook() {
-            if (!currentQuote) return;
-            const url = encodeURIComponent('https://motivational-quote.org');
-            const quote = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}`);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`, '_blank');
-        }
-
-        // Share on WhatsApp
-        function shareWhatsApp() {
-            if (!currentQuote) return;
-            const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}\n\n⭐ Daily Motivation from https://motivational-quote.org`);
-            window.open(`https://wa.me/?text=${text}`, '_blank');
-        }
-
-        // Share on LinkedIn
-        function shareLinkedIn() {
-            if (!currentQuote) return;
-            const url = encodeURIComponent('https://motivational-quote.org');
-            const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}`);
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
-        }
-
-        // Share on Reddit
-        function shareReddit() {
-            if (!currentQuote) return;
-            const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}`);
-            const url = encodeURIComponent('https://motivational-quote.org');
-            window.open(`https://reddit.com/submit?url=${url}&title=${text}`, '_blank');
-        }
-
-        // Handle email subscription - stores locally and attempts backend sync
-        async function handleSubscribe(event) {
-            event.preventDefault();
-            const emailInput = document.getElementById('emailInput');
-            const email = emailInput.value;
-            const submitBtn = event.target.querySelector('button');
-            
-            // Show loading state
-            submitBtn.textContent = 'Subscribing...';
-            submitBtn.disabled = true;
-            
-            try {
-                // Try to send to backend API (if it exists)
-                const response = await fetch('subscribe.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, quoteOfDay: getDailyQuote() })
-                }).catch(() => null);
-                
-                // Store in localStorage regardless (fallback)
-                const subscribers = JSON.parse(localStorage.getItem('quoteSubscribers') || '[]');
-                
-                // Check if already subscribed
-                if (subscribers.some(s => s.email === email)) {
-                    showToast('You are already subscribed!');
-                    submitBtn.textContent = 'Subscribe';
-                    submitBtn.disabled = false;
-                    return;
-                }
-                
-                subscribers.push({ email, date: new Date().toISOString(), quote: getDailyQuote().text });
-                localStorage.setItem('quoteSubscribers', JSON.stringify(subscribers));
-                
-                document.getElementById('emailForm').style.display = 'none';
-                document.getElementById('emailSuccess').classList.add('show');
-                showToast('Successfully subscribed! 🎉');
-                
-            } catch (error) {
-                console.error('Subscription error:', error);
-                showToast('Something went wrong. Please try again.');
-                submitBtn.textContent = 'Subscribe';
-                submitBtn.disabled = false;
-            }
-        }
-
-        // Set today's date
-        function setDate() {
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-US', options);
-        }
-
-        // Initialize AdSense - load all ad units
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        (adsbygoogle = window.adsbygoogle || []).push({});
-
-        // Update Quote Schema for SEO
-        function updateQuoteSchema(quote) {
-            const schema = {
-                "@context": "https://schema.org",
-                "@type": "Quote",
-                "text": quote.text,
-                "author": {
-                    "@type": "Person",
-                    "name": quote.author
-                },
-                "datePublished": new Date().toISOString().split('T')[0]
-            };
-            document.getElementById('quote-schema').textContent = JSON.stringify(schema);
-        }
-            const html = document.documentElement;
-            const btn = document.querySelector('.theme-toggle');
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            html.setAttribute('data-theme', newTheme === 'dark' ? '' : 'light');
-            localStorage.setItem('theme', newTheme);
-            btn.textContent = newTheme === 'light' ? '🌙' : '☀️';
-        }
-
-        // Load saved theme preference
-        (function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                document.documentElement.setAttribute('data-theme', 'light');
-                document.querySelector('.theme-toggle').textContent = '☀️';
-            }
-        })();
-    </script>
-
-    <!-- POD Modal -->
-    <div id="podModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center;">
-        <div style="background: var(--card-bg); padding: 40px; border-radius: 20px; max-width: 500px; width: 90%; position: relative; border: 1px solid var(--border);">
-            <button onclick="closePodModal()" style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer;">&times;</button>
-            <h2 style="margin-bottom: 20px; color: var(--primary);">Get This Quote on a Premium Poster</h2>
-            <div id="podPreview" style="background: #111; padding: 40px; border-radius: 12px; margin-bottom: 20px; text-align: center; border: 4px solid #333; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
-                <p id="podQuoteText" style="font-family: Georgia, serif; font-size: 1.2rem; color: white; font-style: italic;"></p>
-                <p id="podQuoteAuthor" style="color: #cbd5e1; margin-top: 15px; font-size: 0.9rem;"></p>
+function showFavorites() {
+    const list = document.getElementById('favoritesList');
+    document.getElementById('favoritesSection').style.display = 'block';
+    if (favorites.length === 0) {
+        list.innerHTML = '<div class="empty-favorites">No saved quotes yet.</div>';
+    } else {
+        list.innerHTML = favorites.map((f, i) => `
+            <div class="favorite-item">
+                <button class="remove-favorite" onclick="removeFavorite(${i})">✕</button>
+                <p class="quote-text">${f.text}</p>
+                <p class="quote-author">${f.author}</p>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <label style="color: var(--text-muted); font-weight: bold;">Select Size:</label>
-                <select id="podSize" style="padding: 12px; border-radius: 8px; background: var(--bg); color: var(--text); border: 1px solid var(--border); font-size: 1rem;">
-                    <option value="15">8x10" Premium Matte - $15.00</option>
-                    <option value="25">18x24" Premium Matte - $25.00</option>
-                    <option value="35">24x36" Premium Matte - $35.00</option>
-                </select>
-                <button onclick="checkoutPod()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px;">Proceed to Checkout</button>
-            </div>
-        </div>
-    </div>
+        `).join('');
+    }
+}
 
-    <script>
-        function openPodModal() {
-            if (!currentQuote) return;
-            document.getElementById('podQuoteText').innerText = '"' + currentQuote.text + '"';
-            document.getElementById('podQuoteAuthor').innerText = '- ' + currentQuote.author;
-            document.getElementById('podModal').style.display = 'flex';
-        }
-        function closePodModal() {
-            document.getElementById('podModal').style.display = 'none';
-        }
-        function checkoutPod() {
-            const size = document.getElementById('podSize').value;
-            const sizeText = document.getElementById('podSize').options[document.getElementById('podSize').selectedIndex].text;
-            
-            if (!currentQuote) {
-                showToast('Please select a quote first');
-                return;
-            }
-            
-            // Show loading
-            showToast('Preparing your custom poster...');
-            
-            // Create Printful checkout URL (in production, call API)
-            const params = new URLSearchParams({
-                text: currentQuote.text,
-                author: currentQuote.author,
-                size: size,
-                price: size
-            });
-            
-            // Simulate checkout redirect (in production: call Printful API)
-            setTimeout(() => {
-                closePodModal();
-                // Open Printful checkout in new tab
-                window.open('https://www.printful.com/custom/t-shirts?' + params.toString(), '_blank');
-                showToast('Redirected to Printful - complete your order there!');
-            }, 1500);
-        }
-        if(quotes.length > 0) displayQuote(quotes[0]);
-        loadQuotes();
-    </script>
+function hideFavorites() {
+    document.getElementById('favoritesSection').style.display = 'none';
+}
 
+function removeFavorite(index) {
+    favorites.splice(index, 1);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    showFavorites();
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+async function copyQuote() {
+    if (!currentQuote) return;
+    try {
+        await navigator.clipboard.writeText(`"${currentQuote.text}" - ${currentQuote.author}`);
+        showToast('Copied to clipboard!');
+    } catch (e) {
+        showToast('Failed to copy');
+    }
+}
+
+function shareTwitter() {
+    if (!currentQuote) return;
+    window.open(`https://twitter.com/intent/tweet?text="${encodeURIComponent(currentQuote.text)}" - ${encodeURIComponent(currentQuote.author)}`, '_blank');
+}
+
+function shareFacebook() {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`, '_blank');
+}
+
+function shareWhatsApp() {
+    if (!currentQuote) return;
+    const text = `"${currentQuote.text}" - ${currentQuote.author}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+function generateQuoteImage() {
+    if (!currentQuote) return;
+    showToast('Generating image...');
+    const canvas = document.createElement('canvas');
+    canvas.width = 1200; canvas.height = 630;
+    const ctx = canvas.getContext('2d');
+    
+    const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+    gradient.addColorStop(0, '#1e293b'); gradient.addColorStop(1, '#0f172a');
+    ctx.fillStyle = gradient; ctx.fillRect(0, 0, 1200, 630);
+    
+    ctx.fillStyle = '#f8fafc'; ctx.font = 'italic 40px Georgia'; ctx.textAlign = 'center';
+    const words = currentQuote.text.split(' ');
+    let line = '', y = 250;
+    for (let word of words) {
+        const test = line + word + ' ';
+        if (ctx.measureText(test).width > 1000) {
+            ctx.fillText(line, 600, y); line = word + ' '; y += 55;
+        } else { line = test; }
+    }
+    ctx.fillText(line, 600, y);
+    ctx.font = '24px -apple-system'; ctx.fillStyle = '#94a3b8';
+    ctx.fillText(`- ${currentQuote.author}`, 600, y + 50);
+    
+    const link = document.createElement('a'); link.download = 'quote.png';
+    link.href = canvas.toDataURL(); link.click();
+    showToast('Image downloaded!');
+}
+
+function updateQuoteSchema(quote) {
+    const el = document.getElementById('quote-schema');
+    if (!el) return;
+    el.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Quote",
+        "text": quote.text,
+        "author": { "@type": "Person", "name": quote.author },
+        "datePublished": new Date().toISOString().split('T')[0]
+    });
+}
+
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const newTheme = current === 'light' ? '' : 'light';
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    const btn = document.querySelector('.theme-toggle');
+    if(btn) btn.textContent = newTheme === 'light' ? '🌙' : '☀️';
+}
+
+(function() {
+    if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        const btn = document.querySelector('.theme-toggle');
+        if(btn) btn.textContent = '☀️';
+    }
+})();
+
+function openPodModal() {
+    if (!currentQuote) return;
+    document.getElementById('podQuoteText').textContent = `"${currentQuote.text}"`;
+    document.getElementById('podQuoteAuthor').textContent = `- ${currentQuote.author}`;
+    document.getElementById('podModal').style.display = 'flex';
+}
+
+function closePodModal() {
+    document.getElementById('podModal').style.display = 'none';
+}
+
+function checkoutPod() {
+    if (!currentQuote) return;
+    const select = document.getElementById('podSize');
+    const size = select.value;
+    const sizeText = select.options[select.selectedIndex].text;
+    showToast(`Preparing checkout for ${sizeText}...`);
+    setTimeout(() => {
+        closePodModal();
+        const params = new URLSearchParams({ text: currentQuote.text, author: currentQuote.author, size: size });
+        window.open('https://www.printful.com/custom/t-shirts?' + params.toString(), '_blank');
+        showToast('Redirected to secure checkout!');
+    }, 1500);
+}
+
+// Initialize!
+loadQuotes();
+
+</script>
 </body>
 </html>
