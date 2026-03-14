@@ -707,7 +707,7 @@
                 quotes = await response.json();
                 showDailyQuote();
             } catch (error) {
-                console.error('Error loading quotes:', error);
+                console.error("Error:", error); alert("Error: " + error);
                 // Fallback quotes
                 quotes = [
                     {"text": "The only way to do great work is to love what you do.", "author": "Steve Jobs", "category": "Success"},
