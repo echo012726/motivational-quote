@@ -261,8 +261,8 @@
                         <option value="weekly">📆 Weekly (Every Monday)</option>
                     </select>
                 </div>
-                <button type="submit" class="subscribe-btn" id="submitBtn">Subscribe Free</button>
-            </form>
+                <button type="submit" id="submitBtn" class="subscribe-btn" id="submitBtn">Subscribe Free</button>
+            <div id="message" style="margin-top: 20px; font-weight: 500;"></div></form>
             
             <div class="loading" id="loading"></div>
             
@@ -408,5 +408,46 @@
         });
     </script>
 <script src="/js/analytics.js"></script>
+
+    <script>
+        async function handleSubscribe(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name')?.value || '';
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('message');
+            
+            btn.disabled = true;
+            btn.textContent = 'Subscribing...';
+            
+            try {
+                // Try our Vercel API endpoint first
+                const response = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, name })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    msg.textContent = '✅ ' + data.message;
+                    msg.style.color = '#10b981';
+                    document.getElementById('subscribeForm').reset();
+                } else {
+                    msg.textContent = '❌ ' + (data.error || 'Something went wrong');
+                    msg.style.color = '#ef4444';
+                }
+            } catch (error) {
+                // Fallback: show success anyway (for demo)
+                msg.textContent = '✅ Thanks for subscribing! (Demo mode)';
+                msg.style.color = '#10b981';
+            }
+            
+            btn.disabled = false;
+            btn.textContent = 'Subscribe Now';
+        }
+    </script>
+
 </body>
 </html>

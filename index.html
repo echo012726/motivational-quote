@@ -1294,13 +1294,32 @@
             document.getElementById('podModal').style.display = 'none';
         }
         function checkoutPod() {
-            const sizePrice = document.getElementById('podSize').value;
+            const size = document.getElementById('podSize').value;
             const sizeText = document.getElementById('podSize').options[document.getElementById('podSize').selectedIndex].text;
-            showToast('Redirecting to secure checkout for ' + sizeText + '...');
+            
+            if (!currentQuote) {
+                showToast('Please select a quote first');
+                return;
+            }
+            
+            // Show loading
+            showToast('Preparing your custom poster...');
+            
+            // Create Printful checkout URL (in production, call API)
+            const params = new URLSearchParams({
+                text: currentQuote.text,
+                author: currentQuote.author,
+                size: size,
+                price: size
+            });
+            
+            // Simulate checkout redirect (in production: call Printful API)
             setTimeout(() => {
                 closePodModal();
-                // In a real app, redirect to Stripe checkout or Printful API here.
-            }, 2000);
+                // Open Printful checkout in new tab
+                window.open('https://www.printful.com/custom/t-shirts?' + params.toString(), '_blank');
+                showToast('Redirected to Printful - complete your order there!');
+            }, 1500);
         }
     </script>
 
