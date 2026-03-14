@@ -502,26 +502,8 @@
         .share-btn.whatsapp:hover { border-color: #25D366; }
         .share-btn.linkedin:hover { border-color: #0A66C2; }
         .share-btn.reddit:hover { border-color: #FF4500; }
-        .share-btn.twitter { background: #000; border-color: #000; color: #fff; }
-        .share-btn.twitter:hover { border-color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3); }
-        .share-btn.image { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .share-btn.image:hover { border-color: #667eea; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
 
-        /* Image Modal */
-        .image-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .image-modal.active { display: flex; }
-        .image-modal img { max-width: 90%; max-height: 90%; border-radius: 12px; }
+        /* Ad Space - Bottom */
         .ad-space-bottom {
             width: 100%;
             min-height: 250px;
@@ -554,27 +536,6 @@
             .email-form { flex-direction: column; }
         }
     </style>
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/icon-192.png">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Daily Motivation">
-    
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                        console.log('SW registered:', registration.scope);
-                    })
-                    .catch((error) => {
-                        console.log('SW registration failed:', error);
-                    });
-            });
-        }
-    </script>
 </head>
 <body>
     <div class="container">
@@ -618,19 +579,6 @@
                 <button class="filter-btn" data-category="Perseverance" onclick="filterQuotes('Perseverance')">Perseverance</button>
             </div>
             
-            <!-- Category Pages Links -->
-            <div style="margin: 15px 0; padding: 10px; background: var(--card-bg); border-radius: 8px;">
-                <p style="margin: 0 0 10px 0; font-size: 14px; color: var(--text-secondary);">📂 Browse by Category:</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    <a href="#success" class="filter-btn" style="text-decoration: none;">🏆 Success</a>
-                    <a href="#love" class="filter-btn" style="text-decoration: none;">❤️ Love</a>
-                    <a href="#life" class="filter-btn" style="text-decoration: none;">🌱 Life</a>
-                    <a href="#motivation" class="filter-btn" style="text-decoration: none;">🔥 Motivation</a>
-                    <a href="#wisdom" class="filter-btn" style="text-decoration: none;">💡 Wisdom</a>
-                    <a href="#courage" class="filter-btn" style="text-decoration: none;">💪 Courage</a>
-                </div>
-            </div>
-            
             <span class="category-tag" id="categoryTag">Today's Quote</span>
             <div class="quote-icon">🌟</div>
             <p class="quote-text" id="quoteText">Loading quote...</p>
@@ -649,8 +597,8 @@
                 <button class="action-btn" onclick="showFavorites()" title="View favorites">
                     ❤️ Saved
                 </button>
-                <button class="share-btn twitter" onclick="shareTwitter()" title="Share on X">
-                    𝕏 X
+                <button class="share-btn twitter" onclick="shareTwitter()" title="Share on Twitter">
+                    🐦 Twitter
                 </button>
                 <button class="share-btn facebook" onclick="shareFacebook()" title="Share on Facebook">
                     📘 Facebook
@@ -663,9 +611,6 @@
                 </button>
                 <button class="share-btn reddit" onclick="shareReddit()" title="Share on Reddit">
                     👽 Reddit
-                </button>
-                <button class="share-btn image" onclick="generateQuoteImage()" title="Generate Quote Image">
-                    🖼️ Create Image
                 </button>
             </div>
 
@@ -1066,11 +1011,11 @@
             }
         }
 
-        // Share on X (Twitter)
+        // Share on Twitter
         function shareTwitter() {
             if (!currentQuote) return;
             const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}\n\n#motivation #quotes`);
-            window.open(`https://x.com/intent/tweet?text=${text}`, '_blank');
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
         }
 
         // Share on Facebook
@@ -1102,98 +1047,6 @@
             const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}`);
             const url = encodeURIComponent('https://motivational-quote.org');
             window.open(`https://reddit.com/submit?url=${url}&title=${text}`, '_blank');
-        }
-
-        // Generate Shareable Quote Image
-        function generateQuoteImage() {
-            if (!currentQuote) return;
-            
-            // Create canvas
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = 1200;
-            canvas.height = 630;
-            
-            // Background gradient
-            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, '#1a1a2e');
-            gradient.addColorStop(1, '#16213e');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Add decorative elements
-            ctx.fillStyle = 'rgba(255, 215, 0, 0.1)';
-            ctx.beginPath();
-            ctx.arc(100, 100, 200, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(1100, 530, 150, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Quote text
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 48px Georgia, serif';
-            ctx.textAlign = 'center';
-            
-            const words = currentQuote.text.split(' ');
-            const lines = [];
-            let currentLine = '';
-            
-            for (const word of words) {
-                const testLine = currentLine + (currentLine ? ' ' : '') + word;
-                if (ctx.measureText(testLine).width < 1000) {
-                    currentLine = testLine;
-                } else {
-                    lines.push(currentLine);
-                    currentLine = word;
-                }
-            }
-            if (currentLine) lines.push(currentLine);
-            
-            const startY = (canvas.height - lines.length * 60) / 2 + 20;
-            lines.forEach((line, i) => {
-                ctx.fillText(line, canvas.width / 2, startY + i * 60);
-            });
-            
-            // Author
-            ctx.fillStyle = '#ffd700';
-            ctx.font = 'italic 32px Georgia, serif';
-            ctx.fillText(`— ${currentQuote.author}`, canvas.width / 2, startY + lines.length * 60 + 40);
-            
-            // Category tag
-            ctx.fillStyle = 'rgba(255, 215, 0, 0.2)';
-            // Category tag - draw rounded rectangle manually
-            function roundRect(ctx, x, y, w, h, r) {
-                ctx.beginPath();
-                ctx.moveTo(x + r, y);
-                ctx.lineTo(x + w - r, y);
-                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-                ctx.lineTo(x + w, y + h - r);
-                ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-                ctx.lineTo(x + r, y + h);
-                ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-                ctx.lineTo(x, y + r);
-                ctx.quadraticCurveTo(x, y, x + r, y);
-                ctx.closePath();
-            }
-            roundRect(ctx, 50, 50, 200, 50, 25);
-            ctx.fill();
-            ctx.fillStyle = '#ffd700';
-            ctx.font = 'bold 20px Arial';
-            ctx.textAlign = 'left';
-            ctx.fillText(currentQuote.category || 'Motivation', 70, 83);
-            
-            // Website branding
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-            ctx.font = '18px Arial';
-            ctx.textAlign = 'right';
-            ctx.fillText('motivational-quote.org', canvas.width - 50, canvas.height - 30);
-            
-            // Download
-            const link = document.createElement('a');
-            link.download = 'quote-' + Date.now() + '.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
         }
 
         // Handle email subscription - stores locally and attempts backend sync
@@ -1298,61 +1151,10 @@
                 ];
             }
             
-            // Check for hash-based category routing
-            const hash = window.location.hash.replace('#', '');
-            const categoryMap = {
-                'success': 'Success',
-                'love': 'Love',
-                'life': 'Life',
-                'motivation': 'Motivation',
-                'wisdom': 'Wisdom',
-                'courage': 'Courage',
-                'adventure': 'Adventure',
-                'perseverance': 'Perseverance'
-            };
-            
-            if (hash && categoryMap[hash.toLowerCase()]) {
-                const category = categoryMap[hash.toLowerCase()];
-                // Update page title and category tag for category pages
-                document.title = `${category} Quotes | Daily Motivation`;
-                const categoryTag = document.getElementById('categoryTag');
-                if (categoryTag) {
-                    categoryTag.textContent = `${category} Quotes`;
-                }
-                // Set active filter button
-                setTimeout(() => filterQuotes(category), 100);
-            } else {
-                const dailyQ = getDailyQuote();
-                displayQuote(dailyQ);
-            }
-            
+            const dailyQ = getDailyQuote();
+            displayQuote(dailyQ);
             setDate();
-            updateQuoteSchema(dailyQ || quotes[0]);
-            
-            // Listen for hash changes (back/forward navigation)
-            window.addEventListener('hashchange', function() {
-                const newHash = window.location.hash.replace('#', '');
-                if (newHash && categoryMap[newHash.toLowerCase()]) {
-                    const category = categoryMap[newHash.toLowerCase()];
-                    document.title = `${category} Quotes | Daily Motivation`;
-                    const categoryTag = document.getElementById('categoryTag');
-                    if (categoryTag) {
-                        categoryTag.textContent = `${category} Quotes`;
-                    }
-                    filterQuotes(category);
-                } else if (newHash === '' || newHash === 'all') {
-                    window.location.hash = '';
-                    document.title = 'Daily Motivation | Fuel Your Journey';
-                    const categoryTag = document.getElementById('categoryTag');
-                    if (categoryTag) {
-                        categoryTag.textContent = "Today's Quote";
-                    }
-                    document.querySelectorAll('.filter-btn').forEach(btn => {
-                        btn.classList.toggle('active', btn.dataset.category === 'all');
-                    });
-                    newQuote();
-                }
-            });
+            updateQuoteSchema(dailyQ);
         }
 
         // Initialize - load quotes from JSON first
@@ -1379,8 +1181,5 @@
             }
         })();
     </script>
-<script src="/js/analytics.js"></script>
-<script src="/js/pod.js"></script>
 </body>
 </html>
-<!-- Auto-deploy test Sat Mar 14 12:41:20 AM UTC 2026 -->
