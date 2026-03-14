@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Daily Motivation Blog - In-depth articles on personal growth, success, motivation, and self-improvement.">
-    <title>Motivation Blog | Daily Motivation</title>
+    <meta name="description" content="100+ in-depth articles on personal growth, success, motivation, and self-improvement.">
+    <title>Motivation Blog | Daily Motivation - 100+ Articles</title>
     <style>
         :root { --primary: #6366f1; --secondary: #8b5cf6; --bg: #0f172a; --card-bg: #1e293b; --text: #f8fafc; --text-muted: #94a3b8; --border: #334155; }
         [data-theme="light"] { --bg: #f8fafc; --card-bg: #ffffff; --text: #1e293b; --text-muted: #64748b; --border: #e2e8f0; }
@@ -12,20 +12,21 @@
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
         .container { max-width: 900px; margin: 0 auto; padding: 20px; }
         header { text-align: center; padding: 40px 0; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
-        .logo { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+        .logo { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .tagline { color: var(--text-muted); margin-top: 10px; }
         .nav { display: flex; justify-content: center; gap: 30px; margin-top: 20px; }
         .nav a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
         .nav a:hover { color: var(--primary); }
         h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .subtitle { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 40px; }
-        .post-list { display: flex; flex-direction: column; gap: 25px; }
-        .post-card { background: var(--card-bg); border-radius: 16px; padding: 25px; border: 1px solid var(--border); transition: transform 0.3s, box-shadow 0.3s; }
+        .subtitle { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 20px; }
+        .post-count { background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; display: inline-block; margin-bottom: 30px; }
+        .post-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .post-card { background: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border); transition: transform 0.3s, box-shadow 0.3s; }
         .post-card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
         .post-card a { text-decoration: none; color: inherit; }
-        .post-meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 8px; }
-        .post-title { font-size: 1.4rem; margin-bottom: 10px; color: var(--primary); }
-        .post-excerpt { color: var(--text-muted); font-size: 0.95rem; }
+        .post-meta { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 8px; }
+        .post-title { font-size: 1.1rem; margin-bottom: 8px; color: var(--primary); line-height: 1.4; }
+        .post-excerpt { color: var(--text-muted); font-size: 0.85rem; }
         footer { text-align: center; padding: 40px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 60px; }
     </style>
     <link rel="manifest" href="manifest.json">
@@ -44,97 +45,717 @@
         
         <h1>Motivation Blog</h1>
         <p class="subtitle">In-depth articles on personal growth, success, and motivation</p>
+        <span class="post-count">100 Articles</span>
         
         <div class="post-list">
 
             <div class="post-card">
                 <a href="the-science-of-habit-formation.html">
-                    <p class="post-meta">March 14, 2026</p>
-                    <h2 class="post-title">The Science of Habit Formation: How to Rewire Your Brain for Lasting Change</h2>
-                    <p class="post-excerpt">Understanding the neuroscience behind habits and how to create lasting behavioral change.</p>
+                    <p class="post-meta">March 14</p>
+                    <h2 class="post-title">The Science of Habit Formation</h2>
+                    <p class="post-excerpt">Understanding the neuroscience behind habits.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="morning-routines-successful-people.html">
-                    <p class="post-meta">March 15, 2026</p>
-                    <h2 class="post-title">Morning Routines of Highly Successful People: What Science Says Actually Works</h2>
-                    <p class="post-excerpt">Analyzing the morning habits of accomplished individuals and separating fact from fiction.</p>
+                    <p class="post-meta">March 15</p>
+                    <h2 class="post-title">Morning Routines of Highly Successful People</h2>
+                    <p class="post-excerpt">What science says about morning habits.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="overcoming-procrastination.html">
-                    <p class="post-meta">March 16, 2026</p>
-                    <h2 class="post-title">Overcoming Procrastination: The Psychology Behind Delay and How to Beat It</h2>
-                    <p class="post-excerpt">Deep dive into why we procrastinate and evidence-based strategies to overcome this common productivity killer.</p>
+                    <p class="post-meta">March 16</p>
+                    <h2 class="post-title">Overcoming Procrastination</h2>
+                    <p class="post-excerpt">The psychology behind delay and how to beat it.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="growth-vs-fixed-mindset.html">
-                    <p class="post-meta">March 17, 2026</p>
-                    <h2 class="post-title">Growth Mindset vs Fixed Mindset: The Complete Guide to Transforming Your Thinking</h2>
-                    <p class="post-excerpt">Carol Dweck's groundbreaking research explained and practical ways to develop a growth mindset.</p>
+                    <p class="post-meta">March 17</p>
+                    <h2 class="post-title">Growth Mindset vs Fixed Mindset</h2>
+                    <p class="post-excerpt">Carol Dweck's research and practical applications.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="power-of-deliberate-practice.html">
-                    <p class="post-meta">March 18, 2026</p>
-                    <h2 class="post-title">The Power of Deliberate Practice: How Expert Performers Really Master Their Skills</h2>
-                    <p class="post-excerpt">Anders Ericsson's research on expertise revealed - what separates masters from amateurs.</p>
+                    <p class="post-meta">March 18</p>
+                    <h2 class="post-title">The Power of Deliberate Practice</h2>
+                    <p class="post-excerpt">How experts really master their skills.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="understanding-motivation.html">
-                    <p class="post-meta">March 19, 2026</p>
-                    <h2 class="post-title">Understanding Motivation: What Really Drives Human Behavior</h2>
-                    <p class="post-excerpt">Exploring the theories of motivation from Maslow to modern psychology.</p>
+                    <p class="post-meta">March 19</p>
+                    <h2 class="post-title">Understanding Motivation</h2>
+                    <p class="post-excerpt">What drives human behavior.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="resilience-building.html">
-                    <p class="post-meta">March 20, 2026</p>
-                    <h2 class="post-title">Building Resilience: Bouncing Back Stronger from Life's Challenges</h2>
-                    <p class="post-excerpt">The science of resilience and practical strategies to develop mental toughness.</p>
+                    <p class="post-meta">March 20</p>
+                    <h2 class="post-title">Building Resilience</h2>
+                    <p class="post-excerpt">Bouncing back from life's challenges.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="goal-setting-science.html">
-                    <p class="post-meta">March 21, 2026</p>
-                    <h2 class="post-title">The Science of Goal Setting: Why Most Goals Fail and How to Succeed</h2>
-                    <p class="post-excerpt">Research-backed strategies for setting goals that actually work.</p>
+                    <p class="post-meta">March 21</p>
+                    <h2 class="post-title">The Science of Goal Setting</h2>
+                    <p class="post-excerpt">Why most goals fail and how to succeed.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="sleep-performance.html">
-                    <p class="post-meta">March 22, 2026</p>
-                    <h2 class="post-title">Sleep and Peak Performance: The Critical Connection Often Ignored</h2>
-                    <p class="post-excerpt">How sleep affects every aspect of your performance.</p>
+                    <p class="post-meta">March 22</p>
+                    <h2 class="post-title">Sleep and Peak Performance</h2>
+                    <p class="post-excerpt">The critical connection often ignored.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="self-discipline-mastery.html">
-                    <p class="post-meta">March 23, 2026</p>
-                    <h2 class="post-title">Self-Discipline Mastery: The Art of Doing What Needs to Be Done</h2>
-                    <p class="post-excerpt">Understanding self-discipline beyond willpower and building systems.</p>
+                    <p class="post-meta">March 23</p>
+                    <h2 class="post-title">Self-Discipline Mastery</h2>
+                    <p class="post-excerpt">The art of doing what needs to be done.</p>
                 </a>
             </div>
-
             <div class="post-card">
                 <a href="fear-of-failure.html">
-                    <p class="post-meta">March 24, 2026</p>
-                    <h2 class="post-title">Conquering the Fear of Failure: Reframing Setbacks as Opportunities</h2>
-                    <p class="post-excerpt">How to transform fear of failure into fuel for success.</p>
+                    <p class="post-meta">March 24</p>
+                    <h2 class="post-title">Conquering the Fear of Failure</h2>
+                    <p class="post-excerpt">Reframing setbacks as opportunities.</p>
                 </a>
             </div>
-
+            <div class="post-card">
+                <a href="power-of-consistency.html">
+                    <p class="post-meta">March 25</p>
+                    <h2 class="post-title">The Power of Consistency</h2>
+                    <p class="post-excerpt">Why small actions compound over time.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="emotional-intelligence.html">
+                    <p class="post-meta">March 26</p>
+                    <h2 class="post-title">Emotional Intelligence</h2>
+                    <p class="post-excerpt">The secret weapon for success.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="time-management-myths.html">
+                    <p class="post-meta">March 27</p>
+                    <h2 class="post-title">Time Management Myths Debunked</h2>
+                    <p class="post-excerpt">What actually works.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="confidence-building.html">
+                    <p class="post-meta">March 28</p>
+                    <h2 class="post-title">Building Unshakeable Confidence</h2>
+                    <p class="post-excerpt">Beyond fake it till you make it.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="focus-deep-work.html">
+                    <p class="post-meta">March 29</p>
+                    <h2 class="post-title">Deep Work</h2>
+                    <p class="post-excerpt">The productivity superpower.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="gratitude-practice.html">
+                    <p class="post-meta">March 30</p>
+                    <h2 class="post-title">The Science of Gratitude</h2>
+                    <p class="post-excerpt">How thankfulness transforms your brain.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="negative-self-talk.html">
+                    <p class="post-meta">March 31</p>
+                    <h2 class="post-title">Taming Negative Self-Talk</h2>
+                    <p class="post-excerpt">Changing your inner dialogue.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="delayed-gratification.html">
+                    <p class="post-meta">April 1</p>
+                    <h2 class="post-title">The Art of Delayed Gratification</h2>
+                    <p class="post-excerpt">Mastering impulse for long-term success.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="comfort-zone-expansion.html">
+                    <p class="post-meta">April 2</p>
+                    <h2 class="post-title">Comfort Zone Expansion</h2>
+                    <p class="post-excerpt">Strategic risk-taking for growth.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="identity-based-habits.html">
+                    <p class="post-meta">April 3</p>
+                    <h2 class="post-title">Identity-Based Habits</h2>
+                    <p class="post-excerpt">The most effective behavior change.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="stress-management.html">
+                    <p class="post-meta">April 4</p>
+                    <h2 class="post-title">Effective Stress Management</h2>
+                    <p class="post-excerpt">Practical techniques for modern life.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="purpose-discovery.html">
+                    <p class="post-meta">April 5</p>
+                    <h2 class="post-title">Discovering Your Purpose</h2>
+                    <p class="post-excerpt">Beyond the finding yourself myth.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="perfectionism-recovery.html">
+                    <p class="post-meta">April 6</p>
+                    <h2 class="post-title">Overcoming Perfectionism</h2>
+                    <p class="post-excerpt">Embracing good enough.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="positive-environment.html">
+                    <p class="post-meta">April 7</p>
+                    <h2 class="post-title">Designing Your Environment</h2>
+                    <p class="post-excerpt">The hidden driver of behavior.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="energy-management.html">
+                    <p class="post-meta">April 8</p>
+                    <h2 class="post-title">Energy Management</h2>
+                    <p class="post-excerpt">The real metric for productivity.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="social-support.html">
+                    <p class="post-meta">April 9</p>
+                    <h2 class="post-title">The Power of Social Support</h2>
+                    <p class="post-excerpt">Relationships drive success.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="learning-speed.html">
+                    <p class="post-meta">April 10</p>
+                    <h2 class="post-title">Accelerated Learning</h2>
+                    <p class="post-excerpt">Master new skills faster.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="decision-making.html">
+                    <p class="post-meta">April 11</p>
+                    <h2 class="post-title">Better Decision Making</h2>
+                    <p class="post-excerpt">Frameworks for choices that count.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="failure-embracing.html">
+                    <p class="post-meta">April 12</p>
+                    <h2 class="post-title">Embracing Failure</h2>
+                    <p class="post-excerpt">The essential mindset for growth.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="motivation-maintenance.html">
+                    <p class="post-meta">April 13</p>
+                    <h2 class="post-title">Sustaining Motivation</h2>
+                    <p class="post-excerpt">Beyond the initial spark.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="imposter-syndrome.html">
+                    <p class="post-meta">April 14</p>
+                    <h2 class="post-title">Conquering Imposter Syndrome</h2>
+                    <p class="post-excerpt">Owning your achievements.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="criticism-handling.html">
+                    <p class="post-meta">April 15</p>
+                    <h2 class="post-title">Handling Criticism</h2>
+                    <p class="post-excerpt">Separating signal from noise.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="visualization-power.html">
+                    <p class="post-meta">April 16</p>
+                    <h2 class="post-title">The Power of Visualization</h2>
+                    <p class="post-excerpt">Mental rehearsal for results.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="self-awareness.html">
+                    <p class="post-meta">April 17</p>
+                    <h2 class="post-title">Developing Self-Awareness</h2>
+                    <p class="post-excerpt">The foundation of growth.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="pressure-performance.html">
+                    <p class="post-meta">April 18</p>
+                    <h2 class="post-title">Performing Under Pressure</h2>
+                    <p class="post-excerpt">Thriving in high-stress situations.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="saying-no.html">
+                    <p class="post-meta">April 19</p>
+                    <h2 class="post-title">The Art of Saying No</h2>
+                    <p class="post-excerpt">Protecting your time.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="chronotype-productivity.html">
+                    <p class="post-meta">April 20</p>
+                    <h2 class="post-title">Chronotype Optimization</h2>
+                    <p class="post-excerpt">Working with your biology.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="competition-self.html">
+                    <p class="post-meta">April 21</p>
+                    <h2 class="post-title">Competing with Yourself</h2>
+                    <p class="post-excerpt">The only race that matters.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="exercise-brain.html">
+                    <p class="post-meta">April 22</p>
+                    <h2 class="post-title">Exercise and the Brain</h2>
+                    <p class="post-excerpt">Physical fuels mental.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="meditation-habits.html">
+                    <p class="post-meta">April 23</p>
+                    <h2 class="post-title">Meditation for Habits</h2>
+                    <p class="post-excerpt">Training discipline.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="journaling-power.html">
+                    <p class="post-meta">April 24</p>
+                    <h2 class="post-title">The Power of Journaling</h2>
+                    <p class="post-excerpt">Writing your way to clarity.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="minimalism-productivity.html">
+                    <p class="post-meta">April 25</p>
+                    <h2 class="post-title">Minimalism for Productivity</h2>
+                    <p class="post-excerpt">Doing less to achieve more.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="celebrating-wins.html">
+                    <p class="post-meta">April 26</p>
+                    <h2 class="post-title">The Importance of Celebrating Wins</h2>
+                    <p class="post-excerpt">Reinforcing progress.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="rest-recovery.html">
+                    <p class="post-meta">April 27</p>
+                    <h2 class="post-title">Rest and Recovery</h2>
+                    <p class="post-excerpt">The underrated component of success.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="authentic-networking.html">
+                    <p class="post-meta">April 28</p>
+                    <h2 class="post-title">Authentic Networking</h2>
+                    <p class="post-excerpt">Building genuine relationships.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="storytelling-success.html">
+                    <p class="post-meta">April 29</p>
+                    <h2 class="post-title">The Role of Storytelling</h2>
+                    <p class="post-excerpt">Communicating with impact.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="values-living.html">
+                    <p class="post-meta">April 30</p>
+                    <h2 class="post-title">Living Your Values</h2>
+                    <p class="post-excerpt">The foundation of authentic success.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="feedback-loops.html">
+                    <p class="post-meta">May 1</p>
+                    <h2 class="post-title">Creating Feedback Loops</h2>
+                    <p class="post-excerpt">Accelerating your learning.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="wealth-mindset.html">
+                    <p class="post-meta">May 2</p>
+                    <h2 class="post-title">The Psychology of Money</h2>
+                    <p class="post-excerpt">Developing a wealth mindset.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="body-language.html">
+                    <p class="post-meta">May 3</p>
+                    <h2 class="post-title">Body Language and Success</h2>
+                    <p class="post-excerpt">The non-verbal dimension.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="sunk-cost.html">
+                    <p class="post-meta">May 4</p>
+                    <h2 class="post-title">Overcoming Sunk Cost Fallacy</h2>
+                    <p class="post-excerpt">When to cut your losses.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="habit-stacking.html">
+                    <p class="post-meta">May 5</p>
+                    <h2 class="post-title">Habit Stacking</h2>
+                    <p class="post-excerpt">Linking behaviors to routines.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="dopamine-management.html">
+                    <p class="post-meta">May 6</p>
+                    <h2 class="post-title">Dopamine Management</h2>
+                    <p class="post-excerpt">Avoiding the trap of easy rewards.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="negative-visualization.html">
+                    <p class="post-meta">May 7</p>
+                    <h2 class="post-title">Negative Visualization</h2>
+                    <p class="post-excerpt">The Stoic practice.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="anchor-habits.html">
+                    <p class="post-meta">May 8</p>
+                    <h2 class="post-title">Anchor Habits</h2>
+                    <p class="post-excerpt">Using triggers to kickstart your day.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="micro-habits.html">
+                    <p class="post-meta">May 9</p>
+                    <h2 class="post-title">Micro Habits</h2>
+                    <p class="post-excerpt">Starting incredibly small.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="choice-architecture.html">
+                    <p class="post-meta">May 10</p>
+                    <h2 class="post-title">Choice Architecture</h2>
+                    <p class="post-excerpt">Designing your life.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="cognitive-reframing.html">
+                    <p class="post-meta">May 11</p>
+                    <h2 class="post-title">Cognitive Reframing</h2>
+                    <p class="post-excerpt">Changing how you see situations.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="implementation-intentions.html">
+                    <p class="post-meta">May 12</p>
+                    <h2 class="post-title">Implementation Intentions</h2>
+                    <p class="post-excerpt">The if-then strategy.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="mental-contrasting.html">
+                    <p class="post-meta">May 13</p>
+                    <h2 class="post-title">Mental Contrasting</h2>
+                    <p class="post-excerpt">Balancing optimism with reality.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="defaults-power.html">
+                    <p class="post-meta">May 14</p>
+                    <h2 class="post-title">The Power of Defaults</h2>
+                    <p class="post-excerpt">How preset choices shape your life.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="social-proof.html">
+                    <p class="post-meta">May 15</p>
+                    <h2 class="post-title">Social Proof and Success</h2>
+                    <p class="post-excerpt">Leveraging peer influence.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="commitment-devices.html">
+                    <p class="post-meta">May 16</p>
+                    <h2 class="post-title">Commitment Devices</h2>
+                    <p class="post-excerpt">Making good choices easier.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="progress-principle.html">
+                    <p class="post-meta">May 17</p>
+                    <h2 class="post-title">The Progress Principle</h2>
+                    <p class="post-excerpt">How small wins create momentum.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="scarcity-abundance.html">
+                    <p class="post-meta">May 18</p>
+                    <h2 class="post-title">Scarcity vs Abundance</h2>
+                    <p class="post-excerpt">Shifting your mental model.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="flow-states.html">
+                    <p class="post-meta">May 19</p>
+                    <h2 class="post-title">Flow States</h2>
+                    <p class="post-excerpt">The psychology of optimal experience.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="attribution-errors.html">
+                    <p class="post-meta">May 20</p>
+                    <h2 class="post-title">Attribution Errors</h2>
+                    <p class="post-excerpt">Why we misjudge.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="parkinsons-law.html">
+                    <p class="post-meta">May 21</p>
+                    <h2 class="post-title">Parkinson's Law</h2>
+                    <p class="post-excerpt">Time expands to fill its container.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="antifragility.html">
+                    <p class="post-meta">May 22</p>
+                    <h2 class="post-title">Antifragility</h2>
+                    <p class="post-excerpt">Thriving through stress.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="pareto-principle.html">
+                    <p class="post-meta">May 23</p>
+                    <h2 class="post-title">The Pareto Principle</h2>
+                    <p class="post-excerpt">80/20 rule in personal development.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="occams-razor.html">
+                    <p class="post-meta">May 24</p>
+                    <h2 class="post-title">Occam's Razor</h2>
+                    <p class="post-excerpt">Simpler solutions are often better.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="inversion-thinking.html">
+                    <p class="post-meta">May 25</p>
+                    <h2 class="post-title">Inversion</h2>
+                    <p class="post-excerpt">Thinking backward.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="first-principles.html">
+                    <p class="post-meta">May 26</p>
+                    <h2 class="post-title">First Principles Thinking</h2>
+                    <p class="post-excerpt">Breaking down complex problems.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="second-order-thinking.html">
+                    <p class="post-meta">May 27</p>
+                    <h2 class="post-title">Second-Order Thinking</h2>
+                    <p class="post-excerpt">Beyond immediate results.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="circle-competence.html">
+                    <p class="post-meta">May 28</p>
+                    <h2 class="post-title">Circle of Competence</h2>
+                    <p class="post-excerpt">Expanding what you know.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="regret-minimization.html">
+                    <p class="post-meta">May 29</p>
+                    <h2 class="post-title">Regret Minimization</h2>
+                    <p class="post-excerpt">Making long-term decisions.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="reversible-decisions.html">
+                    <p class="post-meta">May 30</p>
+                    <h2 class="post-title">Reversible vs Irreversible</h2>
+                    <p class="post-excerpt">When to act fast.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="convex-decisions.html">
+                    <p class="post-meta">May 31</p>
+                    <h2 class="post-title">Convex vs Concave</h2>
+                    <p class="post-excerpt">Identifying asymmetric opportunities.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="optionality.html">
+                    <p class="post-meta">June 1</p>
+                    <h2 class="post-title">Optionality</h2>
+                    <p class="post-excerpt">Keeping future choices open.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="margin-safety.html">
+                    <p class="post-meta">June 2</p>
+                    <h2 class="post-title">Margin of Safety</h2>
+                    <p class="post-excerpt">Building resilience into plans.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="ergodicity.html">
+                    <p class="post-meta">June 3</p>
+                    <h2 class="post-title">Ergodicity</h2>
+                    <p class="post-excerpt">Why averages don't apply.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="barbell-strategy.html">
+                    <p class="post-meta">June 4</p>
+                    <h2 class="post-title">The Barbel Strategy</h2>
+                    <p class="post-excerpt">Extreme safety with risk.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="skin-in-game.html">
+                    <p class="post-meta">June 5</p>
+                    <h2 class="post-title">Skin in the Game</h2>
+                    <p class="post-excerpt">Commitment creates results.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="via-negativa.html">
+                    <p class="post-meta">June 6</p>
+                    <h2 class="post-title">Via Negativa</h2>
+                    <p class="post-excerpt">The power of subtraction.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="post-traumatic-growth.html">
+                    <p class="post-meta">June 7</p>
+                    <h2 class="post-title">Post-Traumatic Growth</h2>
+                    <p class="post-excerpt">Growing through adversity.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="meaning-making.html">
+                    <p class="post-meta">June 8</p>
+                    <h2 class="post-title">Meaning Making</h2>
+                    <p class="post-excerpt">Creating purpose.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="sustainable-success.html">
+                    <p class="post-meta">June 9</p>
+                    <h2 class="post-title">Beyond the Heroic Model</h2>
+                    <p class="post-excerpt">Sustainable success without burnout.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="autonomy-mastery-purpose.html">
+                    <p class="post-meta">June 10</p>
+                    <h2 class="post-title">Autonomy, Mastery, Purpose</h2>
+                    <p class="post-excerpt">The three elements of motivation.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="beginners-mind.html">
+                    <p class="post-meta">June 11</p>
+                    <h2 class="post-title">Beginner's Mind</h2>
+                    <p class="post-excerpt">Staying curious.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="systems-vs-goals.html">
+                    <p class="post-meta">June 12</p>
+                    <h2 class="post-title">Systems vs Goals</h2>
+                    <p class="post-excerpt">Focus on processes over outcomes.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="inconvenience-yourself.html">
+                    <p class="post-meta">June 13</p>
+                    <h2 class="post-title">Self-Imposed Discomfort</h2>
+                    <p class="post-excerpt">Building mental toughness.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="monk-mode.html">
+                    <p class="post-meta">June 14</p>
+                    <h2 class="post-title">Monk Mode</h2>
+                    <p class="post-excerpt">Intense focus periods.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="environment-cleanup.html">
+                    <p class="post-meta">June 15</p>
+                    <h2 class="post-title">Digital Minimalism</h2>
+                    <p class="post-excerpt">Cleaning your digital life.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="reading-habit.html">
+                    <p class="post-meta">June 16</p>
+                    <h2 class="post-title">The Reading Habit</h2>
+                    <p class="post-excerpt">Continuous learning.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="writing-habit.html">
+                    <p class="post-meta">June 17</p>
+                    <h2 class="post-title">The Writing Habit</h2>
+                    <p class="post-excerpt">Clarity through practice.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="asking-questions.html">
+                    <p class="post-meta">June 18</p>
+                    <h2 class="post-title">The Art of Asking Questions</h2>
+                    <p class="post-excerpt">Curiosity as advantage.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="accepting-uncertainty.html">
+                    <p class="post-meta">June 19</p>
+                    <h2 class="post-title">Embracing Uncertainty</h2>
+                    <p class="post-excerpt">Thriving in an unknown future.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="identity-shift.html">
+                    <p class="post-meta">June 20</p>
+                    <h2 class="post-title">The Identity Shift</h2>
+                    <p class="post-excerpt">Becoming who you want to be.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="envy-elimination.html">
+                    <p class="post-meta">June 21</p>
+                    <h2 class="post-title">Eliminating Envy</h2>
+                    <p class="post-excerpt">Breaking the comparison trap.</p>
+                </a>
+            </div>
+            <div class="post-card">
+                <a href="legacy-thinking.html">
+                    <p class="post-meta">June 22</p>
+                    <h2 class="post-title">Legacy Thinking</h2>
+                    <p class="post-excerpt">Thinking long-term.</p>
+                </a>
+            </div>
         </div>
         
         <footer>
