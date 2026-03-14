@@ -722,6 +722,13 @@
             return quotes[index];
         }
 
+        // Show daily quote
+        function showDailyQuote() {
+            if (quotes.length > 0) {
+                displayQuote(getDailyQuote());
+            }
+        }
+
         // Get random quote
         function getRandomQuote() {
             const index = Math.floor(Math.random() * quotes.length);
