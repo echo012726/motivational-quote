@@ -18,6 +18,8 @@
     <!-- Additional SEO -->
     <meta name="theme-color" content="#6366f1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
     <link rel="alternate" hreflang="en" href="https://motivational-quote.org">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://motivational-quote.org">
@@ -501,6 +503,8 @@
 
         .share-btn.whatsapp:hover { border-color: #25D366; }
         .share-btn.linkedin:hover { border-color: #0A66C2; }
+        .share-btn.image { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .share-btn.image:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
         .share-btn.reddit:hover { border-color: #FF4500; }
 
         /* Ad Space - Bottom */
@@ -536,7 +540,15 @@
             .email-form { flex-direction: column; }
         }
     </style>
-</head>
+<!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VF1RWJ4JV2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "G-VF1RWJ4JV2");
+    </script>
+  </head>
 <body>
     <div class="container">
         <header>
@@ -609,6 +621,7 @@
                 <button class="share-btn linkedin" onclick="shareLinkedIn()" title="Share on LinkedIn">
                     in LinkedIn
                 </button>
+                <button class="share-btn image" onclick="generateQuoteImage()" title="Generate Quote Image">📷</button>
                 <button class="share-btn reddit" onclick="shareReddit()" title="Share on Reddit">
                     👽 Reddit
                 </button>
@@ -1016,6 +1029,70 @@
             if (!currentQuote) return;
             const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}\n\n#motivation #quotes`);
             window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+        }
+
+        // Generate Shareable Quote Image
+        function generateQuoteImage() {
+            if (!currentQuote) return;
+            
+            const canvas = document.createElement("canvas");
+            canvas.width = 1200;
+            canvas.height = 630;
+            const ctx = canvas.getContext("2d");
+            
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, "#6366f1");
+            gradient.addColorStop(1, "#8b5cf6");
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Quote text
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 48px Georgia, serif";
+            ctx.textAlign = "center";
+            const text = """ + currentQuote.text + """;
+            const lines = wrapText(ctx, text, 1000);
+            let y = 200;
+            lines.forEach(line => {
+                ctx.fillText(line, canvas.width / 2, y);
+                y += 60;
+            });
+            
+            // Author
+            ctx.font = "32px Arial";
+            ctx.fillStyle = "#e0e7ff";
+            ctx.fillText("— " + currentQuote.author, canvas.width / 2, y + 40);
+            
+            // Website branding
+            ctx.font = "24px Arial";
+            ctx.fillStyle = "#c7d2fe";
+            ctx.fillText("motivational-quote.org", canvas.width / 2, canvas.height - 40);
+            
+            // Download
+            const link = document.createElement("a");
+            link.download = "quote-" + Date.now() + ".png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+            showToast("Quote image downloaded!");
+        }
+
+        function wrapText(ctx, text, maxWidth) {
+            const words = text.split(" ");
+            const lines = [];
+            let currentLine = "";
+            
+            words.forEach(word => {
+                const testLine = currentLine + word + " ";
+                if (ctx.measureText(testLine).width > maxWidth && currentLine !== "") {
+                    lines.push(currentLine.trim());
+                    currentLine = word + " ";
+                } else {
+                    currentLine = testLine;
+                }
+            });
+            lines.push(currentLine.trim());
+            return lines;
         }
 
         // Share on Facebook
