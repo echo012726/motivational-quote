@@ -622,6 +622,7 @@
                 <button class="share-btn linkedin" onclick="shareLinkedIn()" title="Share on LinkedIn">
                     in LinkedIn
                 </button>
+                <button class="share-btn pod-btn" onclick="openPodModal()" title="Buy as Poster" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; margin-left: 10px; font-weight: bold; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);">🛍️ Buy Poster</button>
                 <button class="share-btn image" onclick="generateQuoteImage()" title="Generate Quote Image">📷</button>
                 <button class="share-btn reddit" onclick="shareReddit()" title="Share on Reddit">
                     👽 Reddit
@@ -1260,5 +1261,48 @@
             }
         })();
     </script>
+
+    <!-- POD Modal -->
+    <div id="podModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: var(--card-bg); padding: 40px; border-radius: 20px; max-width: 500px; width: 90%; position: relative; border: 1px solid var(--border);">
+            <button onclick="closePodModal()" style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer;">&times;</button>
+            <h2 style="margin-bottom: 20px; color: var(--primary);">Get This Quote on a Premium Poster</h2>
+            <div id="podPreview" style="background: #111; padding: 40px; border-radius: 12px; margin-bottom: 20px; text-align: center; border: 4px solid #333; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
+                <p id="podQuoteText" style="font-family: Georgia, serif; font-size: 1.2rem; color: white; font-style: italic;"></p>
+                <p id="podQuoteAuthor" style="color: #cbd5e1; margin-top: 15px; font-size: 0.9rem;"></p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <label style="color: var(--text-muted); font-weight: bold;">Select Size:</label>
+                <select id="podSize" style="padding: 12px; border-radius: 8px; background: var(--bg); color: var(--text); border: 1px solid var(--border); font-size: 1rem;">
+                    <option value="15">8x10" Premium Matte - $15.00</option>
+                    <option value="25">18x24" Premium Matte - $25.00</option>
+                    <option value="35">24x36" Premium Matte - $35.00</option>
+                </select>
+                <button onclick="checkoutPod()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px;">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openPodModal() {
+            if (!currentQuote) return;
+            document.getElementById('podQuoteText').innerText = '"' + currentQuote.text + '"';
+            document.getElementById('podQuoteAuthor').innerText = '- ' + currentQuote.author;
+            document.getElementById('podModal').style.display = 'flex';
+        }
+        function closePodModal() {
+            document.getElementById('podModal').style.display = 'none';
+        }
+        function checkoutPod() {
+            const sizePrice = document.getElementById('podSize').value;
+            const sizeText = document.getElementById('podSize').options[document.getElementById('podSize').selectedIndex].text;
+            showToast('Redirecting to secure checkout for ' + sizeText + '...');
+            setTimeout(() => {
+                closePodModal();
+                // In a real app, redirect to Stripe checkout or Printful API here.
+            }, 2000);
+        }
+    </script>
+
 </body>
 </html>
