@@ -502,6 +502,8 @@
         .share-btn.whatsapp:hover { border-color: #25D366; }
         .share-btn.linkedin:hover { border-color: #0A66C2; }
         .share-btn.reddit:hover { border-color: #FF4500; }
+        .share-btn.twitter { background: #000; border-color: #000; color: #fff; }
+        .share-btn.twitter:hover { border-color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3); }
         .share-btn.image { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
         .share-btn.image:hover { border-color: #667eea; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
 
@@ -552,6 +554,27 @@
             .email-form { flex-direction: column; }
         }
     </style>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Daily Motivation">
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('SW registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -595,6 +618,19 @@
                 <button class="filter-btn" data-category="Perseverance" onclick="filterQuotes('Perseverance')">Perseverance</button>
             </div>
             
+            <!-- Category Pages Links -->
+            <div style="margin: 15px 0; padding: 10px; background: var(--card-bg); border-radius: 8px;">
+                <p style="margin: 0 0 10px 0; font-size: 14px; color: var(--text-secondary);">📂 Browse by Category:</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <a href="#success" class="filter-btn" style="text-decoration: none;">🏆 Success</a>
+                    <a href="#love" class="filter-btn" style="text-decoration: none;">❤️ Love</a>
+                    <a href="#life" class="filter-btn" style="text-decoration: none;">🌱 Life</a>
+                    <a href="#motivation" class="filter-btn" style="text-decoration: none;">🔥 Motivation</a>
+                    <a href="#wisdom" class="filter-btn" style="text-decoration: none;">💡 Wisdom</a>
+                    <a href="#courage" class="filter-btn" style="text-decoration: none;">💪 Courage</a>
+                </div>
+            </div>
+            
             <span class="category-tag" id="categoryTag">Today's Quote</span>
             <div class="quote-icon">🌟</div>
             <p class="quote-text" id="quoteText">Loading quote...</p>
@@ -613,8 +649,8 @@
                 <button class="action-btn" onclick="showFavorites()" title="View favorites">
                     ❤️ Saved
                 </button>
-                <button class="share-btn twitter" onclick="shareTwitter()" title="Share on Twitter">
-                    🐦 Twitter
+                <button class="share-btn twitter" onclick="shareTwitter()" title="Share on X">
+                    𝕏 X
                 </button>
                 <button class="share-btn facebook" onclick="shareFacebook()" title="Share on Facebook">
                     📘 Facebook
@@ -1030,11 +1066,11 @@
             }
         }
 
-        // Share on Twitter
+        // Share on X (Twitter)
         function shareTwitter() {
             if (!currentQuote) return;
             const text = encodeURIComponent(`"${currentQuote.text}" — ${currentQuote.author}\n\n#motivation #quotes`);
-            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+            window.open(`https://x.com/intent/tweet?text=${text}`, '_blank');
         }
 
         // Share on Facebook
@@ -1262,10 +1298,61 @@
                 ];
             }
             
-            const dailyQ = getDailyQuote();
-            displayQuote(dailyQ);
+            // Check for hash-based category routing
+            const hash = window.location.hash.replace('#', '');
+            const categoryMap = {
+                'success': 'Success',
+                'love': 'Love',
+                'life': 'Life',
+                'motivation': 'Motivation',
+                'wisdom': 'Wisdom',
+                'courage': 'Courage',
+                'adventure': 'Adventure',
+                'perseverance': 'Perseverance'
+            };
+            
+            if (hash && categoryMap[hash.toLowerCase()]) {
+                const category = categoryMap[hash.toLowerCase()];
+                // Update page title and category tag for category pages
+                document.title = `${category} Quotes | Daily Motivation`;
+                const categoryTag = document.getElementById('categoryTag');
+                if (categoryTag) {
+                    categoryTag.textContent = `${category} Quotes`;
+                }
+                // Set active filter button
+                setTimeout(() => filterQuotes(category), 100);
+            } else {
+                const dailyQ = getDailyQuote();
+                displayQuote(dailyQ);
+            }
+            
             setDate();
-            updateQuoteSchema(dailyQ);
+            updateQuoteSchema(dailyQ || quotes[0]);
+            
+            // Listen for hash changes (back/forward navigation)
+            window.addEventListener('hashchange', function() {
+                const newHash = window.location.hash.replace('#', '');
+                if (newHash && categoryMap[newHash.toLowerCase()]) {
+                    const category = categoryMap[newHash.toLowerCase()];
+                    document.title = `${category} Quotes | Daily Motivation`;
+                    const categoryTag = document.getElementById('categoryTag');
+                    if (categoryTag) {
+                        categoryTag.textContent = `${category} Quotes`;
+                    }
+                    filterQuotes(category);
+                } else if (newHash === '' || newHash === 'all') {
+                    window.location.hash = '';
+                    document.title = 'Daily Motivation | Fuel Your Journey';
+                    const categoryTag = document.getElementById('categoryTag');
+                    if (categoryTag) {
+                        categoryTag.textContent = "Today's Quote";
+                    }
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.toggle('active', btn.dataset.category === 'all');
+                    });
+                    newQuote();
+                }
+            });
         }
 
         // Initialize - load quotes from JSON first
@@ -1292,5 +1379,8 @@
             }
         })();
     </script>
+<script src="/js/analytics.js"></script>
+<script src="/js/pod.js"></script>
 </body>
 </html>
+<!-- Auto-deploy test Sat Mar 14 12:41:20 AM UTC 2026 -->

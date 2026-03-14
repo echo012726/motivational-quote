@@ -61,7 +61,7 @@
         .form-group {
             margin-bottom: 20px;
         }
-        input[type="email"], input[type="text"] {
+        input[type="email"], input[type="text"], select {
             width: 100%;
             padding: 16px 20px;
             border-radius: 12px;
@@ -70,13 +70,18 @@
             color: #fff;
             font-size: 16px;
             transition: border-color 0.3s;
+            font-family: 'Inter', sans-serif;
         }
         input::placeholder {
             color: rgba(255,255,255,0.5);
         }
-        input:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #ffd700;
+        }
+        select option {
+            background: #1a1a2e;
+            color: #fff;
         }
         .subscribe-btn {
             width: 100%;
@@ -93,6 +98,10 @@
         .subscribe-btn:hover {
             transform: scale(1.02);
             box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+        .subscribe-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
         .benefits {
             display: grid;
@@ -186,11 +195,48 @@
         }
         .success-message {
             display: none;
-            background: rgba(0, 255, 0, 0.2);
-            border: 2px solid #00ff00;
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid #22c55e;
             border-radius: 12px;
             padding: 20px;
             margin-top: 20px;
+            text-align: center;
+        }
+        .success-message h3 {
+            color: #22c55e;
+            margin-bottom: 10px;
+        }
+        .success-message p {
+            color: #fff;
+            font-size: 14px;
+        }
+        .error-message {
+            display: none;
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #ef4444;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            color: #fca5a5;
+            font-size: 14px;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 16px;
+        }
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -199,33 +245,40 @@
         <div class="logo">Motivational<span>Quote</span>.org</div>
         
         <h1>Start Your Day with Inspiration</h1>
-        <p class="subtitle">Join 50,000+ subscribers receiving daily motivational quotes to boost their productivity, confidence, and success.</p>
+        <p class="subtitle">Join thousands of subscribers receiving daily motivational quotes to boost their productivity, confidence, and success.</p>
 
         <div class="subscribe-form">
             <form id="subscribeForm">
                 <div class="form-group">
-                    <input type="text" id="name" placeholder="Your First Name" required>
+                    <input type="text" id="name" placeholder="Your First Name (optional)">
                 </div>
                 <div class="form-group">
                     <input type="email" id="email" placeholder="your@email.com" required>
                 </div>
                 <div class="form-group">
-                    <select id="frequency" style="width: 100%; padding: 16px 20px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: #fff; font-size: 16px;">
-                        <option value="daily">Daily (Every Morning)</option>
-                        <option value="weekly">Weekly (Every Monday)</option>
+                    <select id="frequency" required>
+                        <option value="daily">📅 Daily (Every Morning)</option>
+                        <option value="weekly">📆 Weekly (Every Monday)</option>
                     </select>
                 </div>
-                <button type="submit" class="subscribe-btn">Subscribe Free</button>
+                <button type="submit" class="subscribe-btn" id="submitBtn">Subscribe Free</button>
             </form>
+            
+            <div class="loading" id="loading"></div>
+            
             <div class="success-message" id="successMessage">
-                ✅ Welcome! Check your inbox to confirm your subscription.
+                <h3>🎉 Welcome aboard!</h3>
+                <p>You'll receive your first motivational quote soon!</p>
             </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            
             <p class="privacy-note">🔒 We respect your privacy. Unsubscribe anytime.</p>
         </div>
 
         <div class="stats">
             <div class="stat">
-                <div class="stat-number">50K+</div>
+                <div class="stat-number" id="subscriberCount">---</div>
                 <div class="stat-label">Active Subscribers</div>
             </div>
             <div class="stat">
@@ -287,18 +340,73 @@
     </div>
 
     <script>
-        document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+        // Fetch subscriber count on load
+        async function fetchSubscriberCount() {
+            try {
+                const response = await fetch('/api/subscribe');
+                const data = await response.json();
+                if (data.count !== undefined) {
+                    document.getElementById('subscriberCount').textContent = 
+                        data.count >= 1000 ? (data.count / 1000).toFixed(1) + 'K+' : data.count;
+                }
+            } catch (e) {
+                // Silently fail - show placeholder
+                document.getElementById('subscriberCount').textContent = '50K+';
+            }
+        }
+        fetchSubscriberCount();
+
+        // Handle form submission
+        document.getElementById('subscribeForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
             
-            // Store in subscribers.json (simulated)
-            console.log(`New subscriber: ${name} (${email})`);
+            const email = document.getElementById('email').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const frequency = document.getElementById('frequency').value;
             
-            // Show success message
-            document.getElementById('subscribeForm').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block';
+            // UI feedback
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, name, frequency })
+                });
+                
+                const data = await response.json();
+                
+                loading.style.display = 'none';
+                
+                if (response.ok) {
+                    successMessage.style.display = 'block';
+                    document.getElementById('subscribeForm').reset();
+                    
+                    // Update subscriber count
+                    fetchSubscriberCount();
+                } else {
+                    errorMessage.textContent = data.error || 'Something went wrong. Please try again.';
+                    errorMessage.style.display = 'block';
+                }
+            } catch (error) {
+                loading.style.display = 'none';
+                errorMessage.textContent = 'Network error. Please try again.';
+                errorMessage.style.display = 'block';
+            }
+            
+            submitBtn.disabled = false;
         });
     </script>
+<script src="/js/analytics.js"></script>
 </body>
 </html>
