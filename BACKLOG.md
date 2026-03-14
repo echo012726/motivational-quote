@@ -1,29 +1,29 @@
 # motivational-quote.org Backlog
 
-## BLOG - ✅ COMPLETE (290+ articles)
+## In Progress
+- [ ] Search quotes by keyword
 
-Over 290 deep-dive articles now live at https://motivational-quote.org/blog/
+## Pending Features
+- [ ] Browser push notifications
+- [ ] Quote of the day email  
+- [ ] "More like this" recommendations
+- [ ] User accounts (cloud saved quotes)
+- [ ] Daily quote email subscription
+- [ ] Quote collections pages
+- [ ] Popular quotes section
+- [ ] Random quote API endpoint
 
-Topics cover:
-- Habits & Psychology
-- Productivity & Focus  
-- Mindset & Growth
-- Decision Making
-- Advanced Thinking Models
+## Content
+- [ ] Expand blog posts with more detail
+- [ ] Add more categories to quotes
 
-## DAILY CADENCE - ✅ COMPLETE
-
-1 new blog post will be generated and published daily via automated cron script (`scripts/daily_blog.py`).
-
-## FEATURES - ✅ ALL COMPLETE
-
-- ✅ Dark Mode Toggle
-- ✅ Shareable Quote Images
-- ✅ PWA / Installable App
-- ✅ Google Analytics (GA4)
-- ✅ Blog Section (290+ articles)
-- ✅ Print-on-Demand Integration (Checkout modal to Printful API)
-- ✅ Email Newsletter Integration (Subscription form hooked to API endpoint)
-
-## ALL TASKS COMPLETED! 🎉
-The site is fully built, deployed, and running on autopilot.
+## Completed ✅
+- [x] Dark mode toggle
+- [x] 10,000 quotes
+- [x] 380+ blog posts
+- [x] Share buttons
+- [x] Favorites system
+- [x] Streak counter
+- [x] Keyboard navigation
+- [x] Auto-copy quotes
+- [x] AdSense ready
