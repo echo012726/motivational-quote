@@ -698,6 +698,7 @@
             try {
                 const response = await fetch('quotes.json');
                 quotes = await response.json();
+                showDailyQuote();
             } catch (error) {
                 console.error('Error loading quotes:', error);
                 // Fallback quotes
@@ -706,6 +707,7 @@
                     {"text": "Believe you can and you're halfway there.", "author": "Theodore Roosevelt", "category": "Motivation"},
                     {"text": "Success is not final, failure is not fatal: it is the courage to continue that counts.", "author": "Winston Churchill", "category": "Success"}
                 ];
+                showDailyQuote();
             }
         }
 
